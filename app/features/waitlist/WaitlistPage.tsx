@@ -96,15 +96,16 @@ export function WaitlistPage() {
 
     {/* ── Scrollable layer ── */}
     <div style={{ position: "fixed", inset: 0, overflowY: "auto", zIndex: 10 }}>
-      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, padding: "16px 20px 20px", minHeight: "100%" }}>
+      <div className="scroll-inner" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, padding: "16px 20px 20px", minHeight: "100%" }}>
 
       {/* ── Card 1: Waitlist (dark) ── */}
       <div
+        className="card-1"
         style={{
           position: "relative",
           width: "100%",
           maxWidth: 1440,
-          height: "calc(100vh - 48px)",
+          height: "calc(100svh - 48px)",
           flexShrink: 0,
           borderRadius: 14,
           overflow: "hidden",
@@ -132,6 +133,7 @@ export function WaitlistPage() {
           Content stack: header / body / footer
       ───────────────────────────────────────────── */}
       <div
+        className="content-stack"
         style={{
           position: "relative",
           zIndex: 10,
@@ -150,51 +152,41 @@ export function WaitlistPage() {
           }}
           className="md-body"
         >
-          {/* Mobile-only compact hero strip */}
+          {/* Mobile-only hero */}
           <div
             className="mobile-hero"
             style={{
               flexShrink: 0,
-              padding: "28px 24px 24px",
+              padding: "28px 24px 20px",
               position: "relative",
               overflow: "hidden",
               display: "none",
             }}
           >
-            <span
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 10,
-                fontSize: 10,
-                letterSpacing: "0.3em",
-                textTransform: "uppercase",
-                color: "rgba(217,217,215,0.4)",
-                marginBottom: 8,
-              }}
-            >
-              <span
-                style={{
-                  width: 20,
-                  height: 1,
-                  background: "rgba(217,217,215,0.3)",
-                  display: "inline-block",
-                }}
-              />
+            {/* Eyebrow */}
+            <span style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(217,217,215,0.38)", marginBottom: 12 }}>
+              <span style={{ width: 16, height: 1, background: "rgba(217,217,215,0.25)", display: "inline-block" }} />
               Batch n°01 — Coming soon
             </span>
-            <div
-              style={{
-                fontFamily: "'Bowlby One', 'Arial Black', sans-serif",
-                fontSize: "clamp(52px, 14vw, 80px)",
-                lineHeight: 0.9,
-                letterSpacing: "-0.025em",
-                color: "#d9d9d7",
-              }}
-            >
-              Snack
-              <br />
-              The Magic.
+
+            {/* Title */}
+            <div style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(48px, 13vw, 72px)", lineHeight: 0.88, letterSpacing: "-0.025em", color: "#d9d9d7", marginBottom: 16 }}>
+              Bite<br />First.
+            </div>
+
+            {/* Separator + tagline */}
+            <div style={{ width: 40, height: 1, background: "rgba(217,217,215,0.15)", marginBottom: 12 }} />
+            <p style={{ fontSize: 12, lineHeight: 1.6, color: "rgba(217,217,215,0.4)", margin: 0 }}>
+              Small batches. Handmade. For those who know their food.
+            </p>
+
+            {/* Product mini-stats */}
+            <div style={{ display: "flex", gap: 12, marginTop: 16, flexWrap: "wrap" }}>
+              {["+30g proteína", "0g azúcar", "270 kcal", "✦ Colágeno"].map(s => (
+                <span key={s} style={{ fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(217,217,215,0.35)", background: "rgba(217,217,215,0.06)", border: "1px solid rgba(217,217,215,0.1)", borderRadius: 999, padding: "4px 10px" }}>
+                  {s}
+                </span>
+              ))}
             </div>
           </div>
 
@@ -408,7 +400,7 @@ export function WaitlistPage() {
                 backgroundPosition: "center",
                 display: "flex",
                 flexDirection: "column",
-                overflowY: "auto",
+                overflow: "hidden",
                 padding: "0 48px",
                 position: "relative",
               }}
@@ -420,7 +412,6 @@ export function WaitlistPage() {
                   position: "absolute",
                   inset: 0,
                   background: "rgba(225, 224, 222, 0.52)",
-                  backdropFilter: "blur(2px)",
                   pointerEvents: "none",
                   zIndex: 0,
                 }}
@@ -493,7 +484,7 @@ export function WaitlistPage() {
                           fontSize: 10,
                           letterSpacing: "0.22em",
                           textTransform: "uppercase",
-                          color: "#1a1a1a",
+                          color: "#f1f0ee",
                           marginBottom: 6,
                         }}
                       >
@@ -522,7 +513,7 @@ export function WaitlistPage() {
                           fontSize: 10,
                           letterSpacing: "0.22em",
                           textTransform: "uppercase",
-                          color: "#1a1a1a",
+                          color: "#f1f0ee",
                           marginBottom: 6,
                         }}
                       >
@@ -705,17 +696,118 @@ export function WaitlistPage() {
 
       {/* ── Responsive styles ── */}
       <style>{`
-        @media (max-width: 767px) {
-          .left-panel  { display: none !important; }
-          .mobile-hero { display: flex !important; flex-direction: column; }
-          .right-panel { padding-left: 24px !important; padding-right: 24px !important; }
-        }
+        /* ── Desktop ── */
         @media (min-width: 768px) {
           .mobile-hero { display: none !important; }
           .left-panel  { display: flex !important; }
         }
-        @media (max-height: 680px) {
-          .left-panel { padding-top: 20px !important; padding-bottom: 20px !important; }
+
+        /* ── Mobile ── */
+        @media (max-width: 767px) {
+          /* Outer wrapper: menos padding en mobile */
+          .scroll-inner {
+            padding: 8px 10px 10px !important;
+            gap: 8px !important;
+          }
+
+          /* Cards: crecen con el contenido, min-height de una pantalla */
+          .card-1 {
+            height: auto !important;
+            min-height: calc(100svh - 28px) !important;
+            overflow: clip !important;
+            border-radius: 10px !important;
+          }
+          .card-2 {
+            border-radius: 10px !important;
+          }
+
+          /* Content stack: altura automática en mobile */
+          .content-stack {
+            height: auto !important;
+            flex: 1 !important;
+          }
+
+          /* md-body */
+          .md-body {
+            flex: 1 !important;
+            min-height: auto !important;
+          }
+
+          /* Paneles */
+          .left-panel  { display: none !important; }
+          .mobile-hero { display: flex !important; flex-direction: column; }
+
+          /* Formulario: ocupa el espacio restante, sin scroll propio */
+          .right-panel {
+            padding-left: 20px !important;
+            padding-right: 20px !important;
+            overflow: hidden !important;
+          }
+
+          /* md-body: column en mobile ya está, aseguramos flex correcto */
+          .md-body {
+            flex-direction: column !important;
+            overflow: hidden;
+          }
+        }
+
+        /* ── Bento mobile ── */
+        @media (max-width: 767px) {
+          /* Card 2: crece con el contenido, sin clipping */
+          .card-2 {
+            height: auto !important;
+            min-height: calc(100svh - 28px) !important;
+            overflow: clip !important;
+            border-radius: 10px !important;
+          }
+
+          /* Centrador: altura auto, top, padding compacto */
+          .bento-centerer {
+            height: auto !important;
+            align-items: flex-start !important;
+            padding: 14px !important;
+          }
+
+          /* Grid: 2 columnas, alturas automáticas */
+          .bento-grid {
+            grid-template-columns: repeat(2, 1fr) !important;
+            grid-template-rows: none !important;
+            gap: 8px !important;
+          }
+
+          /* Reset grid positions para que el flujo sea automático */
+          .bc-a, .bc-b, .bc-c, .bc-d, .bc-e,
+          .bc-f, .bc-g, .bc-h, .bc-i, .bc-j {
+            grid-column: auto !important;
+            grid-row: auto !important;
+          }
+
+          /* A — hero: ancho completo, altura mínima cómoda */
+          .bc-a { grid-column: 1 / 3 !important; min-height: 160px; }
+
+          /* B + C — stats lado a lado, altura fija */
+          .bc-b, .bc-c { min-height: 110px; }
+
+          /* D — kcal: ancho completo */
+          .bc-d { grid-column: 1 / 3 !important; min-height: 80px; }
+
+          /* E — colágeno: ancho completo */
+          .bc-e { grid-column: 1 / 3 !important; min-height: 80px; }
+
+          /* F + G — proceso y misión: lado a lado */
+          .bc-f, .bc-g { min-height: 90px; }
+
+          /* H — filosofía: ancho completo */
+          .bc-h { grid-column: 1 / 3 !important; min-height: 90px; }
+
+          /* I + J — para quién y tagline: lado a lado */
+          .bc-i, .bc-j { min-height: 90px; }
+        }
+
+        /* ── Pantallas muy bajas (landscape mobile) ── */
+        @media (max-height: 600px) {
+          .mobile-hero { padding-top: 16px !important; padding-bottom: 12px !important; }
+          .left-panel  { padding-top: 16px !important; padding-bottom: 16px !important; }
           .right-panel { padding-top: 0 !important; }
         }
       `}</style>
@@ -723,11 +815,12 @@ export function WaitlistPage() {
 
       {/* ── Card 2: Product info (silver.jpg) ── */}
       <div
+        className="card-2"
         style={{
           position: "relative",
           width: "100%",
           maxWidth: 1440,
-          height: "calc(100vh - 48px)",
+          height: "calc(100svh - 48px)",
           flexShrink: 0,
           borderRadius: 14,
           overflow: "hidden",
@@ -740,14 +833,15 @@ export function WaitlistPage() {
         {/* Overlay */}
         <div
           aria-hidden="true"
-          style={{ position: "absolute", inset: 0, background: "rgba(8,8,8,0.7)", backdropFilter: "blur(3px)" }}
+          style={{ position: "absolute", inset: 0, background: "rgba(8,8,8,0.45)" }}
         />
 
         {/* Centrado vertical */}
-        <div style={{ position: "relative", zIndex: 1, height: "100%", display: "flex", alignItems: "center", padding: 40 }}>
+        <div className="bento-centerer" style={{ position: "relative", zIndex: 1, height: "100%", display: "flex", alignItems: "center", padding: 40 }}>
 
         {/* Bento grid */}
         <div
+          className="bento-grid"
           style={{
             width: "100%",
             display: "grid",
@@ -757,93 +851,93 @@ export function WaitlistPage() {
             fontFamily: "'DM Sans', 'Helvetica Neue', Arial, sans-serif",
           }}
         >
-          {/* A — Hero (col 1-2, row 1-2) */}
-          <div style={{ gridColumn: "1 / 3", gridRow: "1 / 3", background: "rgba(217,217,215,0.05)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "28px 32px", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-            <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)", marginBottom: 14 }}>The Fred Bites — Batch n°01</span>
-            <h2 style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(34px, 3.6vw, 58px)", lineHeight: 0.9, letterSpacing: "-0.025em", color: "#d9d9d7", margin: "0 0 14px" }}>
+          {/* A */}
+          <div className="bc-a" style={{ gridColumn: "1 / 3", gridRow: "1 / 3", background: "radial-gradient(ellipse at 110% -10%, rgba(105,210,227,0.45) 0%, transparent 55%), radial-gradient(ellipse at -10% 110%, rgba(238,74,129,0.35) 0%, transparent 55%), #f1f0ee", borderRadius: 10, padding: "28px 32px", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)", marginBottom: 14 }}>The Fred Bites — Batch n°01</span>
+            <h2 style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(34px, 3.6vw, 58px)", lineHeight: 0.9, letterSpacing: "-0.025em", color: "#0a0a0a", margin: "0 0 14px" }}>
               Snack<br />diferente.
             </h2>
-            <p style={{ fontSize: 12, lineHeight: 1.65, color: "rgba(217,217,215,0.38)", maxWidth: 300, margin: 0 }}>
+            <p style={{ fontSize: 12, lineHeight: 1.65, color: "rgba(10,10,10,0.55)", maxWidth: 300, margin: 0 }}>
               Nació para demostrar que comer bien puede ser delicioso. Un dulce proteico, hecho a mano, con ingredientes que tu cuerpo reconoce.
             </p>
           </div>
 
-          {/* B — Proteína (col 3, row 1) */}
-          <div style={{ gridColumn: "3", gridRow: "1", background: "rgba(217,217,215,0.06)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "22px 24px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-            <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)" }}>Proteína / 100g</span>
+          {/* B */}
+          <div className="bc-b" style={{ gridColumn: "3", gridRow: "1", background: "radial-gradient(ellipse at 50% 120%, rgba(1,71,186,0.5) 0%, transparent 65%), #f1f0ee", borderRadius: 10, padding: "22px 24px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)" }}>Proteína / 100g</span>
             <div>
-              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(36px, 3.2vw, 52px)", lineHeight: 1, letterSpacing: "-0.03em", color: "#d9d9d7", display: "block" }}>+30g</span>
-              <span style={{ fontSize: 10, color: "rgba(217,217,215,0.25)", letterSpacing: "0.1em" }}>Alto en proteína real</span>
+              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(36px, 3.2vw, 52px)", lineHeight: 1, letterSpacing: "-0.03em", color: "#0a0a0a", display: "block" }}>+30g</span>
+              <span style={{ fontSize: 10, color: "rgba(10,10,10,0.4)", letterSpacing: "0.1em" }}>Alto en proteína real</span>
             </div>
           </div>
 
-          {/* C — Azúcares (col 4, row 1) */}
-          <div style={{ gridColumn: "4", gridRow: "1", background: "rgba(217,217,215,0.06)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "22px 24px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-            <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)" }}>Azúcares añadidos</span>
+          {/* C */}
+          <div className="bc-c" style={{ gridColumn: "4", gridRow: "1", background: "radial-gradient(ellipse at -10% -10%, rgba(238,74,129,0.45) 0%, transparent 60%), #f1f0ee", borderRadius: 10, padding: "22px 24px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)" }}>Azúcares añadidos</span>
             <div>
-              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(36px, 3.2vw, 52px)", lineHeight: 1, letterSpacing: "-0.03em", color: "#d9d9d7", display: "block" }}>0g</span>
-              <span style={{ fontSize: 10, color: "rgba(217,217,215,0.25)", letterSpacing: "0.1em" }}>Sin picos de glucosa</span>
+              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(36px, 3.2vw, 52px)", lineHeight: 1, letterSpacing: "-0.03em", color: "#0a0a0a", display: "block" }}>0g</span>
+              <span style={{ fontSize: 10, color: "rgba(10,10,10,0.4)", letterSpacing: "0.1em" }}>Sin picos de glucosa</span>
             </div>
           </div>
 
-          {/* D — Kcal (col 3-4, row 2) */}
-          <div style={{ gridColumn: "3 / 5", gridRow: "2", background: "rgba(217,217,215,0.04)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+          {/* D */}
+          <div className="bc-d" style={{ gridColumn: "3 / 5", gridRow: "2", background: "radial-gradient(ellipse at 0% 50%, rgba(105,210,227,0.4) 0%, transparent 60%), #f1f0ee", borderRadius: 10, padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
             <div>
-              <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)", display: "block", marginBottom: 8 }}>Calorías / 100g</span>
-              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(28px, 2.8vw, 44px)", lineHeight: 1, letterSpacing: "-0.03em", color: "#d9d9d7" }}>270 kcal</span>
+              <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)", display: "block", marginBottom: 8 }}>Calorías / 100g</span>
+              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(28px, 2.8vw, 44px)", lineHeight: 1, letterSpacing: "-0.03em", color: "#0a0a0a" }}>270 kcal</span>
             </div>
-            <p style={{ fontSize: 11, lineHeight: 1.6, color: "rgba(217,217,215,0.28)", maxWidth: 160, margin: 0 }}>
+            <p style={{ fontSize: 11, lineHeight: 1.6, color: "rgba(10,10,10,0.5)", maxWidth: 160, margin: 0 }}>
               Energía real sin comprometer tu día ni tu salud.
             </p>
           </div>
 
-          {/* E — Colágeno & Magnesio (col 1-2, row 3) */}
-          <div style={{ gridColumn: "1 / 3", gridRow: "3", background: "rgba(217,217,215,0.05)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "18px 24px", display: "flex", alignItems: "center", gap: 18 }}>
-            <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 28, color: "rgba(217,217,215,0.4)", lineHeight: 1, flexShrink: 0 }}>✦</span>
+          {/* E */}
+          <div className="bc-e" style={{ gridColumn: "1 / 3", gridRow: "3", background: "radial-gradient(ellipse at 110% 110%, rgba(242,120,200,0.5) 0%, transparent 55%), #f1f0ee", borderRadius: 10, padding: "18px 24px", display: "flex", alignItems: "center", gap: 18 }}>
+            <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 28, color: "rgba(238,74,129,0.8)", lineHeight: 1, flexShrink: 0 }}>✦</span>
             <div>
-              <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)", display: "block", marginBottom: 3 }}>Ingredientes funcionales</span>
-              <span style={{ fontSize: 14, color: "#d9d9d7", fontWeight: 500, letterSpacing: "-0.01em" }}>Colágeno & Magnesio</span>
-              <span style={{ fontSize: 10, color: "rgba(217,217,215,0.25)", display: "block", marginTop: 2 }}>Para lo que tu cuerpo necesita cada día.</span>
+              <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)", display: "block", marginBottom: 3 }}>Ingredientes funcionales</span>
+              <span style={{ fontSize: 14, color: "#0a0a0a", fontWeight: 500, letterSpacing: "-0.01em" }}>Colágeno & Magnesio</span>
+              <span style={{ fontSize: 10, color: "rgba(10,10,10,0.45)", display: "block", marginTop: 2 }}>Para lo que tu cuerpo necesita cada día.</span>
             </div>
           </div>
 
-          {/* F — Proceso (col 3, row 3) */}
-          <div style={{ gridColumn: "3", gridRow: "3", background: "rgba(217,217,215,0.05)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "18px 20px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-            <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)" }}>Proceso</span>
+          {/* F */}
+          <div className="bc-f" style={{ gridColumn: "3", gridRow: "3", background: "radial-gradient(ellipse at 50% -20%, rgba(137,171,228,0.55) 0%, transparent 65%), #f1f0ee", borderRadius: 10, padding: "18px 20px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)" }}>Proceso</span>
             <div>
-              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 17, color: "#d9d9d7", letterSpacing: "-0.01em", display: "block" }}>Handmade</span>
-              <span style={{ fontSize: 10, color: "rgba(217,217,215,0.25)", letterSpacing: "0.06em" }}>Lotes pequeños · Est. 2025</span>
+              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 17, color: "#0a0a0a", letterSpacing: "-0.01em", display: "block" }}>Handmade</span>
+              <span style={{ fontSize: 10, color: "rgba(10,10,10,0.4)", letterSpacing: "0.06em" }}>Lotes pequeños · Est. 2025</span>
             </div>
           </div>
 
-          {/* G — Misión (col 4, row 3) */}
-          <div style={{ gridColumn: "4", gridRow: "3", background: "rgba(217,217,215,0.05)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "18px 20px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
-            <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)" }}>Misión</span>
+          {/* G */}
+          <div className="bc-g" style={{ gridColumn: "4", gridRow: "3", background: "radial-gradient(ellipse at 110% 50%, rgba(238,74,129,0.4) 0%, transparent 60%), #f1f0ee", borderRadius: 10, padding: "18px 20px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)" }}>Misión</span>
             <div>
-              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 17, color: "#d9d9d7", letterSpacing: "-0.01em", display: "block" }}>Bite well.</span>
-              <span style={{ fontSize: 10, color: "rgba(217,217,215,0.25)", letterSpacing: "0.06em" }}>Sin sacrificar el sabor</span>
+              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 17, color: "#0a0a0a", letterSpacing: "-0.01em", display: "block" }}>Bite well.</span>
+              <span style={{ fontSize: 10, color: "rgba(10,10,10,0.4)", letterSpacing: "0.06em" }}>Sin sacrificar el sabor</span>
             </div>
           </div>
 
-          {/* H — Filosofía (col 1-2, row 4) */}
-          <div style={{ gridColumn: "1 / 3", gridRow: "4", background: "rgba(217,217,215,0.04)", border: "1px solid rgba(217,217,215,0.06)", borderRadius: 10, padding: "16px 24px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 5 }}>
-            <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(217,217,215,0.25)" }}>Por qué The Fred Bites</span>
-            <p style={{ fontSize: 11, lineHeight: 1.65, color: "rgba(217,217,215,0.32)", margin: 0 }}>
+          {/* H */}
+          <div className="bc-h" style={{ gridColumn: "1 / 3", gridRow: "4", background: "radial-gradient(ellipse at 0% 50%, rgba(105,210,227,0.3) 0%, transparent 55%), #f1f0ee", borderRadius: 10, padding: "16px 24px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 5 }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)" }}>Por qué The Fred Bites</span>
+            <p style={{ fontSize: 11, lineHeight: 1.65, color: "rgba(10,10,10,0.55)", margin: 0 }}>
               Creemos que un snack puede ser funcional, delicioso y honesto al mismo tiempo. Sin ingredientes que no reconoces, sin promesas vacías — solo producto bien hecho.
             </p>
           </div>
 
-          {/* I — Para quién (col 3, row 4) */}
-          <div style={{ gridColumn: "3", gridRow: "4", background: "rgba(217,217,215,0.04)", border: "1px solid rgba(217,217,215,0.06)", borderRadius: 10, padding: "16px 20px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 5 }}>
-            <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(217,217,215,0.25)" }}>Para quién</span>
-            <p style={{ fontSize: 11, lineHeight: 1.6, color: "rgba(217,217,215,0.32)", margin: 0 }}>
+          {/* I */}
+          <div className="bc-i" style={{ gridColumn: "3", gridRow: "4", background: "radial-gradient(ellipse at 110% 50%, rgba(242,120,200,0.35) 0%, transparent 60%), #f1f0ee", borderRadius: 10, padding: "16px 20px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 5 }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)" }}>Para quién</span>
+            <p style={{ fontSize: 11, lineHeight: 1.6, color: "rgba(10,10,10,0.55)", margin: 0 }}>
               Para quien entrena, trabaja duro o simplemente quiere comer mejor sin complicarse la vida.
             </p>
           </div>
 
-          {/* J — Tagline (col 4, row 4) */}
-          <div style={{ gridColumn: "4", gridRow: "4", background: "rgba(217,217,215,0.04)", border: "1px solid rgba(217,217,215,0.06)", borderRadius: 10, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(12px, 1.3vw, 17px)", lineHeight: 1.2, letterSpacing: "-0.02em", color: "rgba(217,217,215,0.22)", textAlign: "center" as const }}>
+          {/* J */}
+          <div className="bc-j" style={{ gridColumn: "4", gridRow: "4", background: "radial-gradient(ellipse at 0% 0%, rgba(105,210,227,0.35) 0%, transparent 55%), radial-gradient(ellipse at 110% 110%, rgba(238,74,129,0.35) 0%, transparent 55%), #f1f0ee", borderRadius: 10, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(12px, 1.3vw, 17px)", lineHeight: 1.2, letterSpacing: "-0.02em", color: "rgba(10,10,10,0.45)", textAlign: "center" as const }}>
               "Feel good.<br/>Bite first."
             </span>
           </div>
