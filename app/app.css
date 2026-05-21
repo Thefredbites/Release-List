@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "DM Sans", "Inter", ui-sans-serif, system-ui, sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+  --font-display: "Bowlby One", "Arial Black", sans-serif;
+}
+
+html,
+body {
+  @apply m-0 bg-stone-50 text-stone-950;
+}
+
+body {
+  @apply min-h-screen;
+}
+
+a {
+  @apply text-inherit no-underline;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* ── Brand CSS variables ── */
+:root {
+  --ink:     #0a0a0a;
+  --ink-2:   #1a1a1a;
+  --ink-3:   #3a3a3a;
+  --paper:   #d9d9d7;
+  --paper-2: #ebebe9;
+}
+
+/* ── Keyframes ── */
+@keyframes grain {
+  0%,  100% { transform: translate(0,    0)    }
+  20%        { transform: translate(-3%,  2%)   }
+  40%        { transform: translate( 2%, -2%)   }
+  60%        { transform: translate(-2%, -3%)   }
+  80%        { transform: translate( 3%,  1%)   }
+}
+
+@keyframes marquee {
+  from { transform: translateX(0) }
+  to   { transform: translateX(-50%) }
+}
+
+@keyframes live-pulse {
+  0%, 100% { opacity: 0.4 }
+  50%       { opacity: 1   }
+}
+
+@keyframes shake {
+  0%,  100% { transform: translateX(0)   }
+  20%        { transform: translateX(-6px) }
+  40%        { transform: translateX( 6px) }
+  60%        { transform: translateX(-4px) }
+  80%        { transform: translateX( 4px) }
+}
+
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(14px) }
+  to   { opacity: 1; transform: translateY(0)    }
+}
+
+/* ── Grain overlay ── */
+.grain-layer {
+  position: absolute;
+  inset: -50%;
+  z-index: 2;
+  background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.1  0 0 0 0 0.1  0 0 0 0 0.1  0 0 0 .45 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+  opacity: 0.32;
+  pointer-events: none;
+  mix-blend-mode: overlay;
+  animation: grain 1.4s steps(6) infinite;
+}
+
+/* ── Live dot ── */
+.live-dot {
+  display: inline-block;
+  width:  7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #7fd47f;
+  box-shadow: 0 0 8px #7fd47f;
+  animation: live-pulse 1.6s ease-in-out infinite;
+}
+
+/* ── Marquee ── */
+.marquee-track {
+  display: flex;
+  gap: 48px;
+  padding: 11px 0;
+  font-family: var(--font-display);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--paper);
+  white-space: nowrap;
+  animation: marquee 38s linear infinite;
+  will-change: transform;
+}
+
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 48px;
+  flex-shrink: 0;
+}
+
+.marquee-item::after {
+  content: "";
+  display: inline-block;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--paper);
+  opacity: 0.6;
+}
+
+/* ── Waitlist form inputs ── */
+.wl-input {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.72);
+  border: 1.5px solid rgba(10, 10, 10, 0.18);
+  border-radius: 10px;
+  padding: 13px 16px;
+  font-size: 15px;
+  font-family: inherit;
+  color: var(--ink);
+  outline: none;
+  box-sizing: border-box;
+  transition: border-color 0.15s, background 0.15s, box-shadow 0.15s;
+  backdrop-filter: blur(4px);
+}
+
+.wl-input:focus {
+  border-color: rgba(10, 10, 10, 0.5);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 0 0 3px rgba(10, 10, 10, 0.07);
+}
+
+.wl-input--transparent {
+  background: rgba(255, 255, 255, 0.38);
+}
+
+.wl-input--transparent:focus {
+  background: rgba(255, 255, 255, 0.82);
+}
+
+.wl-input--error {
+  border-color: #a23a17 !important;
+  background: #f3e8e3 !important;
+  animation: shake 0.28s ease;
+}
+
+/* ── Submit button ── */
+.wl-submit {
+  width: 100%;
+  background: rgba(10, 10, 10, 0.88);
+  color: var(--paper);
+  border: none;
+  border-radius: 10px;
+  padding: 15px 24px;
+  font-size: 11px;
+  font-family: inherit;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.15s, transform 0.12s;
+}
+
+.wl-submit:hover {
+  background: #2a2a2a;
+  transform: translateY(-1px);
+}
+
+.wl-submit:active {
+  transform: translateY(0);
+}
+
+/* ── Fade-up entrance ── */
+.fade-up {
+  animation: fade-up 0.42s ease both;
+}
