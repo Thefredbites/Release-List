@@ -2,10 +2,10 @@ import { useState } from "react";
 
 const MARQUEE_ITEMS = [
   "Batch n°01",
-  "Ya mero",
+  "Coming soon",
   "Small run",
   "Handmade",
-  "Pa' los que mastican",
+  "For those who know",
   "Release list open",
 ];
 
@@ -31,15 +31,87 @@ export function WaitlistPage() {
   }
 
   return (
+    <>
+    {/* ── Static background (fixed, no scroll) ── */}
     <div
       style={{
         position: "fixed",
         inset: 0,
+        background: `
+          radial-gradient(ellipse 70% 60% at -5% -5%, rgba(103,232,249,0.55) 0%, transparent 60%),
+          radial-gradient(ellipse 65% 55% at 105% 108%, rgba(244,114,182,0.55) 0%, transparent 60%),
+          #ffffff
+        `,
         overflow: "hidden",
-        background: "#0a0a0a",
-        fontFamily: "'DM Sans', 'Helvetica Neue', Arial, sans-serif",
+        zIndex: 0,
       }}
     >
+      {/* ── Decorative SVG top-right ── */}
+      <img
+        src="/decorative_topright_pink.svg"
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          top: 0,
+          right: 0,
+          width: "clamp(280px, 30vw, 480px)",
+          pointerEvents: "none",
+          userSelect: "none",
+        }}
+      />
+
+      {/* ── Decorative SVG bottom-left ── */}
+      <img
+        src="/decorative_bottomleft_blue.svg"
+        aria-hidden="true"
+        style={{
+          position: "absolute",
+          bottom: 0,
+          left: 0,
+          width: "clamp(260px, 28vw, 440px)",
+          pointerEvents: "none",
+          userSelect: "none",
+        }}
+      />
+
+      {/* ── Logo — top-left del fondo, fuera del ancho del card ── */}
+      <a
+        href="#"
+        aria-label="The Fred Bites"
+        style={{
+          position: "absolute",
+          top: 16,
+          left: 20,
+          textDecoration: "none",
+          zIndex: 20,
+        }}
+      >
+        <img
+          src="/isotipo.png"
+          alt="The Fred Bites"
+          style={{ width: 28, height: 28, objectFit: "contain", display: "block" }}
+        />
+      </a>
+    </div>
+
+    {/* ── Scrollable layer ── */}
+    <div style={{ position: "fixed", inset: 0, overflowY: "auto", zIndex: 10 }}>
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, padding: "16px 20px 20px", minHeight: "100%" }}>
+
+      {/* ── Card 1: Waitlist (dark) ── */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          maxWidth: 1440,
+          height: "calc(100vh - 48px)",
+          flexShrink: 0,
+          borderRadius: 14,
+          overflow: "hidden",
+          background: "#0a0a0a",
+          fontFamily: "'DM Sans', 'Helvetica Neue', Arial, sans-serif",
+        }}
+      >
       {/* Animated grain texture */}
       <div className="grain-layer" aria-hidden="true" />
 
@@ -68,54 +140,6 @@ export function WaitlistPage() {
           flexDirection: "column",
         }}
       >
-        {/* ── Header ── */}
-        <header
-          style={{
-            flexShrink: 0,
-            display: "flex",
-            alignItems: "center",
-            padding: "16px 28px",
-            borderBottom: "1px solid rgba(217,217,215,0.08)",
-          }}
-        >
-          {/* Isotipo */}
-          <a
-            href="#"
-            aria-label="The Fred Bites"
-            style={{
-              width: 38,
-              height: 38,
-              borderRadius: "50%",
-              background: "#d9d9d7",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              padding: 5,
-              flexShrink: 0,
-              textDecoration: "none",
-            }}
-          >
-            <img
-              src="/isotipo.png"
-              alt=""
-              style={{ width: "100%", height: "100%", objectFit: "contain" }}
-            />
-          </a>
-
-          <span
-            style={{
-              marginLeft: 12,
-              fontSize: 11,
-              letterSpacing: "0.26em",
-              textTransform: "uppercase",
-              color: "rgba(217,217,215,0.55)",
-            }}
-          >
-            The Fred Bites
-          </span>
-
-        </header>
-
         {/* ── Body: left brand panel + right form panel ── */}
         <div
           style={{
@@ -157,7 +181,7 @@ export function WaitlistPage() {
                   display: "inline-block",
                 }}
               />
-              Batch n°01 — Ya mero
+              Batch n°01 — Coming soon
             </span>
             <div
               style={{
@@ -168,9 +192,9 @@ export function WaitlistPage() {
                 color: "#d9d9d7",
               }}
             >
-              Bite
+              Snack
               <br />
-              first.
+              The Magic.
             </div>
           </div>
 
@@ -250,16 +274,6 @@ export function WaitlistPage() {
                     display: "inline-block",
                   }}
                 />
-                <span
-                  style={{
-                    fontSize: 10,
-                    letterSpacing: "0.3em",
-                    textTransform: "uppercase",
-                    color: "rgba(217,217,215,0.38)",
-                  }}
-                >
-                  Batch n°01 — Ya mero
-                </span>
               </div>
 
               {/* Main typographic lockup */}
@@ -268,29 +282,30 @@ export function WaitlistPage() {
                   flex: 1,
                   display: "flex",
                   flexDirection: "column",
-                  justifyContent: "center",
+                  justifyContent: "flex-start",
+                  paddingTop: 24,
                   paddingBottom: 12,
                 }}
               >
                 <h1
                   style={{
                     fontFamily: "'Bowlby One', 'Arial Black', sans-serif",
-                    fontSize: "clamp(72px, 10.8vw, 158px)",
-                    lineHeight: 0.88,
+                    fontSize: "clamp(48px, 6.2vw, 90px)",
+                    lineHeight: 0.9,
                     letterSpacing: "-0.025em",
                     color: "#d9d9d7",
                     margin: 0,
                   }}
                 >
-                  Bite
+                  Snack
                   <br />
-                  First.
+                  The Magic.
                 </h1>
 
                 {/* Thin rule */}
                 <div
                   style={{
-                    marginTop: 28,
+                    marginTop: 18,
                     width: "55%",
                     height: 1,
                     background: "rgba(217,217,215,0.15)",
@@ -299,15 +314,49 @@ export function WaitlistPage() {
 
                 <p
                   style={{
-                    marginTop: 20,
-                    fontSize: 14,
+                    marginTop: 14,
+                    fontSize: 13,
                     lineHeight: 1.6,
                     color: "rgba(217,217,215,0.45)",
                     maxWidth: 320,
                   }}
                 >
-                  Small batches. Handmade. Pa' los que sí mastican de verdad.
+                  Small batches. Handmade. For those who know their food.
                 </p>
+
+                {/* Product preview */}
+                <div className="mt-5 flex gap-3 items-start">
+                  {/* Images */}
+                  <div className="flex gap-2 shrink-0">
+                    {["/empaque1.png", "/empaque2.png"].map((src, i) => (
+                      <img
+                        key={i}
+                        src={src}
+                        alt={`The Fred Bites — presentation 0${i + 1}`}
+                        className="w-50 h-auto block"
+                      />
+                    ))}
+                  </div>
+
+                  {/* Product info */}
+                  <div className="flex flex-col gap-2 pt-1 shrink-0">
+                    {[
+                      { value: "+30g", detail: "proteína / 100g" },
+                      { value: "0g", detail: "azúcares añadidos" },
+                      { value: "260", detail: "calorías / 100g" },
+                      { value: "✦", detail: "colágeno & magnesio" },
+                    ].map(({ value, detail }) => (
+                      <div key={detail} className="flex items-baseline gap-1.5">
+                        <span className="font-[Bowlby_One] text-[13px] leading-none tracking-tight text-[#d9d9d7]">
+                          {value}
+                        </span>
+                        <span className="text-[10px] uppercase tracking-widest text-[#d9d9d7]/40">
+                          {detail}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
               </div>
 
               {/* Bottom brand row */}
@@ -400,24 +449,7 @@ export function WaitlistPage() {
                       marginBottom: 18,
                     }}
                   >
-                    <span
-                      style={{
-                        width: 20,
-                        height: 1.5,
-                        background: "#1a1a1a",
-                        display: "inline-block",
-                      }}
-                    />
-                    <span
-                      style={{
-                        fontSize: 10,
-                        letterSpacing: "0.3em",
-                        textTransform: "uppercase",
-                        color: "#3a3a3a",
-                      }}
-                    >
-                      La release list
-                    </span>
+                    
                   </div>
 
                   {/* Headline */}
@@ -618,7 +650,7 @@ export function WaitlistPage() {
                       maxWidth: 340,
                     }}
                   >
-                    Te avisamos cuando la batch n°01 esté ready. De paso, cuéntale a alguien que mastique de verdad.
+                    We'll notify you when batch n°01 is ready. Share it with someone who'd appreciate it.
                   </p>
 
                   <span
@@ -687,6 +719,140 @@ export function WaitlistPage() {
           .right-panel { padding-top: 0 !important; }
         }
       `}</style>
+      </div>
+
+      {/* ── Card 2: Product info (silver.jpg) ── */}
+      <div
+        style={{
+          position: "relative",
+          width: "100%",
+          maxWidth: 1440,
+          height: "calc(100vh - 48px)",
+          flexShrink: 0,
+          borderRadius: 14,
+          overflow: "hidden",
+          backgroundImage: "url('/silver.jpg')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          fontFamily: "'DM Sans', 'Helvetica Neue', Arial, sans-serif",
+        }}
+      >
+        {/* Overlay */}
+        <div
+          aria-hidden="true"
+          style={{ position: "absolute", inset: 0, background: "rgba(8,8,8,0.7)", backdropFilter: "blur(3px)" }}
+        />
+
+        {/* Centrado vertical */}
+        <div style={{ position: "relative", zIndex: 1, height: "100%", display: "flex", alignItems: "center", padding: 40 }}>
+
+        {/* Bento grid */}
+        <div
+          style={{
+            width: "100%",
+            display: "grid",
+            gridTemplateColumns: "repeat(4, 1fr)",
+            gridTemplateRows: "160px 120px 100px 90px",
+            gap: 10,
+            fontFamily: "'DM Sans', 'Helvetica Neue', Arial, sans-serif",
+          }}
+        >
+          {/* A — Hero (col 1-2, row 1-2) */}
+          <div style={{ gridColumn: "1 / 3", gridRow: "1 / 3", background: "rgba(217,217,215,0.05)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "28px 32px", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)", marginBottom: 14 }}>The Fred Bites — Batch n°01</span>
+            <h2 style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(34px, 3.6vw, 58px)", lineHeight: 0.9, letterSpacing: "-0.025em", color: "#d9d9d7", margin: "0 0 14px" }}>
+              Snack<br />diferente.
+            </h2>
+            <p style={{ fontSize: 12, lineHeight: 1.65, color: "rgba(217,217,215,0.38)", maxWidth: 300, margin: 0 }}>
+              Nació para demostrar que comer bien puede ser delicioso. Un dulce proteico, hecho a mano, con ingredientes que tu cuerpo reconoce.
+            </p>
+          </div>
+
+          {/* B — Proteína (col 3, row 1) */}
+          <div style={{ gridColumn: "3", gridRow: "1", background: "rgba(217,217,215,0.06)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "22px 24px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)" }}>Proteína / 100g</span>
+            <div>
+              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(36px, 3.2vw, 52px)", lineHeight: 1, letterSpacing: "-0.03em", color: "#d9d9d7", display: "block" }}>+30g</span>
+              <span style={{ fontSize: 10, color: "rgba(217,217,215,0.25)", letterSpacing: "0.1em" }}>Alto en proteína real</span>
+            </div>
+          </div>
+
+          {/* C — Azúcares (col 4, row 1) */}
+          <div style={{ gridColumn: "4", gridRow: "1", background: "rgba(217,217,215,0.06)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "22px 24px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)" }}>Azúcares añadidos</span>
+            <div>
+              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(36px, 3.2vw, 52px)", lineHeight: 1, letterSpacing: "-0.03em", color: "#d9d9d7", display: "block" }}>0g</span>
+              <span style={{ fontSize: 10, color: "rgba(217,217,215,0.25)", letterSpacing: "0.1em" }}>Sin picos de glucosa</span>
+            </div>
+          </div>
+
+          {/* D — Kcal (col 3-4, row 2) */}
+          <div style={{ gridColumn: "3 / 5", gridRow: "2", background: "rgba(217,217,215,0.04)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "20px 24px", display: "flex", alignItems: "center", justifyContent: "space-between", gap: 16 }}>
+            <div>
+              <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)", display: "block", marginBottom: 8 }}>Calorías / 100g</span>
+              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(28px, 2.8vw, 44px)", lineHeight: 1, letterSpacing: "-0.03em", color: "#d9d9d7" }}>270 kcal</span>
+            </div>
+            <p style={{ fontSize: 11, lineHeight: 1.6, color: "rgba(217,217,215,0.28)", maxWidth: 160, margin: 0 }}>
+              Energía real sin comprometer tu día ni tu salud.
+            </p>
+          </div>
+
+          {/* E — Colágeno & Magnesio (col 1-2, row 3) */}
+          <div style={{ gridColumn: "1 / 3", gridRow: "3", background: "rgba(217,217,215,0.05)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "18px 24px", display: "flex", alignItems: "center", gap: 18 }}>
+            <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 28, color: "rgba(217,217,215,0.4)", lineHeight: 1, flexShrink: 0 }}>✦</span>
+            <div>
+              <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)", display: "block", marginBottom: 3 }}>Ingredientes funcionales</span>
+              <span style={{ fontSize: 14, color: "#d9d9d7", fontWeight: 500, letterSpacing: "-0.01em" }}>Colágeno & Magnesio</span>
+              <span style={{ fontSize: 10, color: "rgba(217,217,215,0.25)", display: "block", marginTop: 2 }}>Para lo que tu cuerpo necesita cada día.</span>
+            </div>
+          </div>
+
+          {/* F — Proceso (col 3, row 3) */}
+          <div style={{ gridColumn: "3", gridRow: "3", background: "rgba(217,217,215,0.05)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "18px 20px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)" }}>Proceso</span>
+            <div>
+              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 17, color: "#d9d9d7", letterSpacing: "-0.01em", display: "block" }}>Handmade</span>
+              <span style={{ fontSize: 10, color: "rgba(217,217,215,0.25)", letterSpacing: "0.06em" }}>Lotes pequeños · Est. 2025</span>
+            </div>
+          </div>
+
+          {/* G — Misión (col 4, row 3) */}
+          <div style={{ gridColumn: "4", gridRow: "3", background: "rgba(217,217,215,0.05)", border: "1px solid rgba(217,217,215,0.08)", borderRadius: 10, padding: "18px 20px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(217,217,215,0.3)" }}>Misión</span>
+            <div>
+              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 17, color: "#d9d9d7", letterSpacing: "-0.01em", display: "block" }}>Bite well.</span>
+              <span style={{ fontSize: 10, color: "rgba(217,217,215,0.25)", letterSpacing: "0.06em" }}>Sin sacrificar el sabor</span>
+            </div>
+          </div>
+
+          {/* H — Filosofía (col 1-2, row 4) */}
+          <div style={{ gridColumn: "1 / 3", gridRow: "4", background: "rgba(217,217,215,0.04)", border: "1px solid rgba(217,217,215,0.06)", borderRadius: 10, padding: "16px 24px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 5 }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(217,217,215,0.25)" }}>Por qué The Fred Bites</span>
+            <p style={{ fontSize: 11, lineHeight: 1.65, color: "rgba(217,217,215,0.32)", margin: 0 }}>
+              Creemos que un snack puede ser funcional, delicioso y honesto al mismo tiempo. Sin ingredientes que no reconoces, sin promesas vacías — solo producto bien hecho.
+            </p>
+          </div>
+
+          {/* I — Para quién (col 3, row 4) */}
+          <div style={{ gridColumn: "3", gridRow: "4", background: "rgba(217,217,215,0.04)", border: "1px solid rgba(217,217,215,0.06)", borderRadius: 10, padding: "16px 20px", display: "flex", flexDirection: "column", justifyContent: "center", gap: 5 }}>
+            <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(217,217,215,0.25)" }}>Para quién</span>
+            <p style={{ fontSize: 11, lineHeight: 1.6, color: "rgba(217,217,215,0.32)", margin: 0 }}>
+              Para quien entrena, trabaja duro o simplemente quiere comer mejor sin complicarse la vida.
+            </p>
+          </div>
+
+          {/* J — Tagline (col 4, row 4) */}
+          <div style={{ gridColumn: "4", gridRow: "4", background: "rgba(217,217,215,0.04)", border: "1px solid rgba(217,217,215,0.06)", borderRadius: 10, padding: "16px 20px", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(12px, 1.3vw, 17px)", lineHeight: 1.2, letterSpacing: "-0.02em", color: "rgba(217,217,215,0.22)", textAlign: "center" as const }}>
+              "Feel good.<br/>Bite first."
+            </span>
+          </div>
+        </div>
+        </div>
+      </div>
+
+      </div>
     </div>
+    </>
   );
 }
