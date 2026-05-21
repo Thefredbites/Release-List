@@ -155,13 +155,7 @@ export function WaitlistPage() {
           {/* Mobile-only hero */}
           <div
             className="mobile-hero"
-            style={{
-              flexShrink: 0,
-              padding: "28px 24px 20px",
-              position: "relative",
-              overflow: "hidden",
-              display: "none",
-            }}
+            style={{ flexShrink: 0, padding: "28px 24px 24px", position: "relative", display: "none" }}
           >
             {/* Eyebrow */}
             <span style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(217,217,215,0.38)", marginBottom: 12 }}>
@@ -170,22 +164,44 @@ export function WaitlistPage() {
             </span>
 
             {/* Title */}
-            <div style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(48px, 13vw, 72px)", lineHeight: 0.88, letterSpacing: "-0.025em", color: "#d9d9d7", marginBottom: 16 }}>
+            <div style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(52px, 14vw, 76px)", lineHeight: 0.88, letterSpacing: "-0.025em", color: "#d9d9d7", marginBottom: 16 }}>
               Bite<br />First.
             </div>
 
             {/* Separator + tagline */}
             <div style={{ width: 40, height: 1, background: "rgba(217,217,215,0.15)", marginBottom: 12 }} />
-            <p style={{ fontSize: 12, lineHeight: 1.6, color: "rgba(217,217,215,0.4)", margin: 0 }}>
+            <p style={{ fontSize: 13, lineHeight: 1.6, color: "rgba(217,217,215,0.42)", margin: "0 0 24px" }}>
               Small batches. Handmade. For those who know their food.
             </p>
 
-            {/* Product mini-stats */}
-            <div style={{ display: "flex", gap: 12, marginTop: 16, flexWrap: "wrap" }}>
-              {["+30g proteína", "0g azúcar", "270 kcal", "✦ Colágeno"].map(s => (
-                <span key={s} style={{ fontSize: 9, letterSpacing: "0.18em", textTransform: "uppercase", color: "rgba(217,217,215,0.35)", background: "rgba(217,217,215,0.06)", border: "1px solid rgba(217,217,215,0.1)", borderRadius: 999, padding: "4px 10px" }}>
-                  {s}
-                </span>
+            {/* Imágenes */}
+            <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
+              {["/empaque1.png", "/empaque2.png"].map((src, i) => (
+                <img
+                  key={i}
+                  src={src}
+                  alt={`The Fred Bites — presentation 0${i + 1}`}
+                  style={{ width: 110, height: "auto", objectFit: "contain", display: "block" }}
+                />
+              ))}
+            </div>
+
+            {/* Stats */}
+            <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
+              {[
+                { value: "+30g", detail: "proteína / 100g" },
+                { value: "0g", detail: "azúcares añadidos" },
+                { value: "270", detail: "calorías / 100g" },
+                { value: "✦", detail: "colágeno & magnesio" },
+              ].map(({ value, detail }) => (
+                <div key={detail} style={{ display: "flex", alignItems: "baseline", gap: 7 }}>
+                  <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 15, lineHeight: 1, color: "#d9d9d7", letterSpacing: "-0.01em" }}>
+                    {value}
+                  </span>
+                  <span style={{ fontSize: 10, letterSpacing: "0.1em", textTransform: "uppercase", color: "rgba(217,217,215,0.38)" }}>
+                    {detail}
+                  </span>
+                </div>
               ))}
             </div>
           </div>
