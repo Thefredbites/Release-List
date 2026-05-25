@@ -380,37 +380,20 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                         gap: 4,
                       }}
                     >
-                      <span
-                        style={{
-                          fontFamily: "'Bowlby One', 'Arial Black', sans-serif",
-                          fontSize: 15,
-                          letterSpacing: "-0.01em",
-                          color: "#d9d9d7",
-                          lineHeight: 1.1,
-                        }}
-                      >
-                        Natural
-                      </span>
-                      <span
-                        style={{
-                          fontSize: 12,
-                          lineHeight: 1.4,
-                          color: "rgba(217,217,215,0.7)",
-                          fontStyle: "italic",
-                        }}
-                      >
-                        Delicioso
-                      </span>
-                      <span
-                        style={{
-                          fontSize: 12,
-                          lineHeight: 1.4,
-                          color: "rgba(217,217,215,0.5)",
-                          fontStyle: "italic",
-                        }}
-                      >
-                        Crujiente y suave
-                      </span>
+                      {["Natural", "Delicioso", "Crujiente y suave"].map((word) => (
+                        <span
+                          key={word}
+                          style={{
+                            fontFamily: "'Bowlby One', 'Arial Black', sans-serif",
+                            fontSize: 15,
+                            letterSpacing: "-0.01em",
+                            color: "#d9d9d7",
+                            lineHeight: 1.1,
+                          }}
+                        >
+                          {word}
+                        </span>
+                      ))}
                     </div>
                   </div>
                 </div>
