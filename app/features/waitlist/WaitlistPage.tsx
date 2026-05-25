@@ -352,18 +352,18 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                   </div>
 
                   {/* Product info */}
-                  <div className="flex flex-col gap-2 pt-1 shrink-0">
+                  <div className="flex flex-col gap-3 pt-1 shrink-0">
                     {[
                       { value: "+30g", detail: "proteína / 100g" },
                       { value: "0g", detail: "azúcares añadidos" },
                       { value: "260", detail: "calorías / 100g" },
                       { value: "✦", detail: "colágeno & magnesio" },
                     ].map(({ value, detail }) => (
-                      <div key={detail} className="flex items-baseline gap-1.5">
-                        <span className="font-[Bowlby_One] text-[13px] leading-none tracking-tight text-[#d9d9d7]">
+                      <div key={detail} className="flex items-baseline gap-2.5">
+                        <span className="font-[Bowlby_One] text-[22px] leading-none tracking-tight text-[#d9d9d7]">
                           {value}
                         </span>
-                        <span className="text-[10px] uppercase tracking-widest text-[#d9d9d7]/40">
+                        <span className="text-[11px] uppercase tracking-widest text-[#d9d9d7]/75">
                           {detail}
                         </span>
                       </div>
@@ -531,7 +531,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                       maxWidth: 340,
                     }}
                   >
-                    La batch n°01 sale pronto. Un mensaje al lanzar, precio de founders — así de simple.
+                    Sé de los primeros: promociones, descuentos y regalos exclusivos para early supporters, además de avisos de lanzamiento y eventos privados.
                   </p>
 
                   {/* Form */}
@@ -689,7 +689,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                       borderTop: "1px solid rgba(10,10,10,0.1)",
                     }}
                   >
-                    {["Zero spam", "Un email al lanzar", "Limited run"].map(
+                    {["Promos & descuentos", "Eventos exclusivos", "Cupo limitado"].map(
                       (item) => (
                         <span
                           key={item}
