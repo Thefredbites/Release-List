@@ -31,6 +31,7 @@ export type SanitizedWaitlistInput = {
 
 const EMAIL_MAX_LENGTH = 320;
 const E164_REGEX = /^\+[1-9]\d{7,14}$/;
+const RESERVE_POSITION_OFFSET = 79;
 
 function cleanEmail(value: FormDataEntryValue | null) {
   return typeof value === "string" ? value.trim() : "";
@@ -113,11 +114,8 @@ export function hashIpAddress(ipAddress: string | null) {
   return createHash("sha256").update(ipAddress).digest("hex");
 }
 
-export function buildReserveCode(emailNormalized: string) {
-  const digest = createHash("sha1").update(emailNormalized).digest("hex");
-  const numeric = Number.parseInt(digest.slice(0, 8), 16);
-
-  return String((numeric % 900) + 100).padStart(3, "0");
+export function formatReserveCodeFromPosition(position: number) {
+  return String(position + RESERVE_POSITION_OFFSET).padStart(3, "0");
 }
 
 export function isSpamTrapTriggered(formData: FormData) {

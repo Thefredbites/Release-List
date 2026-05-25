@@ -3,7 +3,7 @@ import { useActionData, useNavigation } from "react-router";
 import type { Route } from "./+types/home";
 import { createSupabaseAdminClient } from "../lib/supabase.server";
 import {
-  buildReserveCode,
+  formatReserveCodeFromPosition,
   getClientIp,
   hashIpAddress,
   isSpamTrapTriggered,
@@ -77,16 +77,20 @@ export async function action({ request }: Route.ActionArgs) {
     }
   }
 
-  const { error } = await supabaseAdmin.from("waitlist_leads").upsert(
-    {
-      email: validation.data.email,
-      email_normalized: validation.data.emailNormalized,
-      whatsapp: validation.data.whatsapp,
-      source: "website_waitlist",
-      submitted_ip_hash: ipHash,
-    },
-    { onConflict: "email_normalized" },
-  );
+  const { data: savedLead, error } = await supabaseAdmin
+    .from("waitlist_leads")
+    .upsert(
+      {
+        email: validation.data.email,
+        email_normalized: validation.data.emailNormalized,
+        whatsapp: validation.data.whatsapp,
+        source: "website_waitlist",
+        submitted_ip_hash: ipHash,
+      },
+      { onConflict: "email_normalized" },
+    )
+    .select("id")
+    .single();
 
   if (error) {
     return {
@@ -98,10 +102,39 @@ export async function action({ request }: Route.ActionArgs) {
     } satisfies WaitlistSubmissionResult;
   }
 
+  const { data: orderedLeads, error: orderingError } = await supabaseAdmin
+    .from("waitlist_leads")
+    .select("id")
+    .order("created_at", { ascending: true })
+    .order("id", { ascending: true });
+
+  if (orderingError || !savedLead) {
+    return {
+      ok: false,
+      fieldErrors: {
+        form: "Guardamos tu registro, pero no pudimos calcular tu lugar. Intenta otra vez en unos segundos.",
+      },
+      values: validation.values,
+    } satisfies WaitlistSubmissionResult;
+  }
+
+  const waitlistPosition =
+    orderedLeads.findIndex((lead) => lead.id === savedLead.id) + 1;
+
+  if (waitlistPosition <= 0) {
+    return {
+      ok: false,
+      fieldErrors: {
+        form: "Guardamos tu registro, pero no pudimos recuperar tu lugar. Intenta otra vez en unos segundos.",
+      },
+      values: validation.values,
+    } satisfies WaitlistSubmissionResult;
+  }
+
   return {
     ok: true,
     message: "Ya quedaste en la lista. Te avisaremos cuando salga la batch n°01.",
-    reserveCode: buildReserveCode(validation.data.emailNormalized),
+    reserveCode: formatReserveCodeFromPosition(waitlistPosition),
   } satisfies WaitlistSubmissionResult;
 }
 

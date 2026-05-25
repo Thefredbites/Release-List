@@ -712,21 +712,28 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                       : "Te avisaremos cuando batch n°01 salga."}
                   </p>
 
-                  <span
+                  <div
                     style={{
-                      display: "inline-block",
-                      border: "1.5px solid #0a0a0a",
+                      display: "inline-flex",
+                      border: "1px solid rgba(10,10,10,0.14)",
                       borderRadius: 999,
-                      padding: "10px 22px",
+                      padding: "12px 20px",
                       fontSize: 11,
                       letterSpacing: "0.22em",
                       textTransform: "uppercase",
                       color: "#0a0a0a",
                       width: "fit-content",
+                      alignItems: "center",
+                      gap: 10,
+                      background:
+                        "linear-gradient(135deg, rgba(255,255,255,0.88) 0%, rgba(240,236,230,0.94) 52%, rgba(225,219,212,0.88) 100%)",
+                      boxShadow:
+                        "0 14px 34px rgba(10,10,10,0.12), inset 0 1px 0 rgba(255,255,255,0.72)",
+                      backdropFilter: "blur(10px)",
                     }}
                   >
-                    Lugar reservado · n°{submission?.ok ? submission.reserveCode : "000"}
-                  </span>
+                    ✦ Lugar reservado · n°{submission?.ok ? submission.reserveCode : "000"}
+                  </div>
 
                   <div style={{ marginTop: "auto", paddingTop: 28 }}>
                     <img
