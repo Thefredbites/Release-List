@@ -47,75 +47,159 @@ function formatDate(value: string) {
 
 export default function Admin({ loaderData }: Route.ComponentProps) {
   return (
-    <main className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(103,232,249,0.16),_transparent_36%),linear-gradient(180deg,#0c0c0c_0%,#171717_100%)] px-6 py-8 text-stone-100">
-      <div className="mx-auto max-w-6xl">
-        <header className="flex flex-col gap-4 rounded-[28px] border border-white/10 bg-white/6 p-6 backdrop-blur md:flex-row md:items-center md:justify-between">
-          <div>
-            <p className="text-[11px] uppercase tracking-[0.32em] text-stone-400">
-              The Fred Bites Admin
-            </p>
-            <h1 className="mt-3 text-3xl font-black uppercase tracking-tight">
-              Waitlist Leads
-            </h1>
-            <p className="mt-2 text-sm text-stone-300">
-              Sesion activa como {loaderData.user.email}
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-3">
-            <a
-              href="/admin/leads.csv"
-              className="rounded-2xl border border-cyan-300/40 bg-cyan-300/10 px-4 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-cyan-100 transition hover:bg-cyan-300/20"
-            >
-              Descargar CSV
-            </a>
-            <Form action="/admin/logout" method="post">
-              <button
-                type="submit"
-                className="cursor-pointer rounded-2xl border border-white/12 bg-white/6 px-4 py-3 text-sm font-semibold uppercase tracking-[0.18em] text-stone-100 transition hover:bg-white/10"
-              >
-                Logout
-              </button>
-            </Form>
-          </div>
-        </header>
+    <main className="relative min-h-screen overflow-hidden bg-[#f4efe8] text-[#0a0a0a]">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0"
+        style={{
+          background:
+            "radial-gradient(ellipse 58% 48% at 8% 6%, rgba(103,232,249,0.32) 0%, transparent 62%), radial-gradient(ellipse 50% 44% at 92% 10%, rgba(244,114,182,0.22) 0%, transparent 62%), linear-gradient(180deg, #f8f4ef 0%, #ebe4da 100%)",
+        }}
+      />
+      <img
+        src="/decorative_topright_pink.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute right-0 top-0 w-[min(34vw,420px)] opacity-80"
+      />
+      <img
+        src="/decorative_bottomleft_blue.svg"
+        alt=""
+        aria-hidden="true"
+        className="pointer-events-none absolute bottom-0 left-0 w-[min(32vw,380px)] opacity-80"
+      />
 
-        <section className="mt-6 overflow-hidden rounded-[28px] border border-white/10 bg-white/5 backdrop-blur">
-          {loaderData.leads.length === 0 ? (
-            <div className="px-6 py-12 text-center text-sm text-stone-300">
-              Aun no hay leads registrados.
+      <div className="relative z-10 mx-auto max-w-7xl px-4 py-4 sm:px-6 sm:py-6">
+        <section className="overflow-hidden rounded-[30px] border border-black/10 bg-[#0a0a0a] text-[#d9d9d7] shadow-[0_26px_90px_rgba(10,10,10,0.18)]">
+          <div className="relative border-b border-white/10 px-5 py-6 sm:px-8 sm:py-8">
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(103,232,249,0.12),_transparent_34%),radial-gradient(circle_at_bottom_right,_rgba(244,114,182,0.10),_transparent_32%)]"
+            />
+            <div className="grain-layer" aria-hidden="true" />
+
+            <div className="relative flex flex-col gap-6 lg:flex-row lg:items-end lg:justify-between">
+              <div className="max-w-2xl">
+                <div className="flex items-center gap-3">
+                  <img
+                    src="/isotipo.png"
+                    alt="The Fred Bites"
+                    className="h-8 w-8 object-contain invert brightness-[1.9]"
+                  />
+                  <span className="text-[10px] uppercase tracking-[0.34em] text-[#d9d9d7]/48">
+                    The Fred Bites Admin
+                  </span>
+                </div>
+
+                <h1 className="mt-5 font-[Bowlby_One] text-[clamp(2.35rem,5vw,4.8rem)] leading-[0.92] tracking-[-0.04em] text-[#d9d9d7]">
+                  Waitlist
+                  <br />
+                  Control Room.
+                </h1>
+
+                <div className="mt-5 h-px w-28 bg-[#d9d9d7]/18" />
+
+                <p className="mt-4 max-w-xl text-sm leading-6 text-[#d9d9d7]/60 sm:text-[15px]">
+                  Sesion activa como {loaderData.user.email}
+                </p>
+              </div>
+
+              <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
+                <a
+                  href="/admin/leads.csv"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-cyan-300/32 bg-cyan-300/12 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-cyan-100 transition hover:bg-cyan-300/20"
+                >
+                  Descargar CSV
+                </a>
+                <Form action="/admin/logout" method="post">
+                  <button
+                    type="submit"
+                    className="inline-flex min-h-12 w-full cursor-pointer items-center justify-center rounded-full border border-white/14 bg-white/6 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#d9d9d7] transition hover:bg-white/10 sm:w-auto"
+                  >
+                    Logout
+                  </button>
+                </Form>
+              </div>
             </div>
-          ) : (
-            <div className="overflow-x-auto">
-              <table className="min-w-full divide-y divide-white/10 text-left text-sm">
-                <thead className="bg-white/6 text-[11px] uppercase tracking-[0.22em] text-stone-400">
-                  <tr>
-                    <th className="px-5 py-4 font-medium">Email</th>
-                    <th className="px-5 py-4 font-medium">WhatsApp</th>
-                    <th className="px-5 py-4 font-medium">Source</th>
-                    <th className="px-5 py-4 font-medium">Created</th>
-                    <th className="px-5 py-4 font-medium">Updated</th>
-                  </tr>
-                </thead>
-                <tbody className="divide-y divide-white/6">
-                  {loaderData.leads.map((lead) => (
-                    <tr key={lead.id} className="align-top text-stone-100">
-                      <td className="px-5 py-4">{lead.email}</td>
-                      <td className="px-5 py-4 text-stone-300">
-                        {lead.whatsapp ?? "—"}
-                      </td>
-                      <td className="px-5 py-4 text-stone-300">{lead.source}</td>
-                      <td className="px-5 py-4 text-stone-300">
-                        {formatDate(lead.created_at)}
-                      </td>
-                      <td className="px-5 py-4 text-stone-300">
-                        {formatDate(lead.updated_at)}
-                      </td>
+          </div>
+
+          <section className="relative bg-[linear-gradient(180deg,rgba(236,232,226,0.98)_0%,rgba(224,218,210,0.95)_100%)] text-[#0a0a0a]">
+            <div
+              aria-hidden="true"
+              className="absolute inset-0 bg-[radial-gradient(circle_at_top,_rgba(255,255,255,0.45),_transparent_40%)]"
+            />
+
+            {loaderData.leads.length === 0 ? (
+              <div className="relative px-6 py-16 text-center sm:px-8">
+                <p className="text-[11px] uppercase tracking-[0.3em] text-[#3a3a3a]/50">
+                  Waitlist
+                </p>
+                <p className="mt-4 text-sm text-[#3a3a3a]">
+                  Aun no hay leads registrados.
+                </p>
+              </div>
+            ) : (
+              <div className="relative overflow-x-auto">
+                <table className="min-w-full border-separate border-spacing-0 text-left text-sm">
+                  <thead>
+                    <tr className="text-[10px] uppercase tracking-[0.28em] text-[#3a3a3a]/58">
+                      <th className="border-b border-black/8 px-5 py-4 font-medium sm:px-6">
+                        Email
+                      </th>
+                      <th className="border-b border-black/8 px-5 py-4 font-medium sm:px-6">
+                        WhatsApp
+                      </th>
+                      <th className="border-b border-black/8 px-5 py-4 font-medium sm:px-6">
+                        Source
+                      </th>
+                      <th className="border-b border-black/8 px-5 py-4 font-medium sm:px-6">
+                        Created
+                      </th>
+                      <th className="border-b border-black/8 px-5 py-4 font-medium sm:px-6">
+                        Updated
+                      </th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
-          )}
+                  </thead>
+                  <tbody>
+                    {loaderData.leads.map((lead, index) => (
+                      <tr
+                        key={lead.id}
+                        className="align-top transition hover:bg-black/[0.035]"
+                      >
+                        <td
+                          className={`px-5 py-4 text-[#0a0a0a] sm:px-6 ${index !== 0 ? "border-t border-black/6" : ""}`}
+                        >
+                          <span className="font-medium">{lead.email}</span>
+                        </td>
+                        <td
+                          className={`px-5 py-4 text-[#3a3a3a] sm:px-6 ${index !== 0 ? "border-t border-black/6" : ""}`}
+                        >
+                          {lead.whatsapp ?? "—"}
+                        </td>
+                        <td
+                          className={`px-5 py-4 text-[#3a3a3a] sm:px-6 ${index !== 0 ? "border-t border-black/6" : ""}`}
+                        >
+                          <span className="inline-flex rounded-full border border-black/8 bg-white/45 px-3 py-1 text-[10px] uppercase tracking-[0.18em] text-[#3a3a3a]">
+                            {lead.source}
+                          </span>
+                        </td>
+                        <td
+                          className={`px-5 py-4 text-[#3a3a3a] sm:px-6 ${index !== 0 ? "border-t border-black/6" : ""}`}
+                        >
+                          {formatDate(lead.created_at)}
+                        </td>
+                        <td
+                          className={`px-5 py-4 text-[#3a3a3a] sm:px-6 ${index !== 0 ? "border-t border-black/6" : ""}`}
+                        >
+                          {formatDate(lead.updated_at)}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
+          </section>
         </section>
       </div>
     </main>

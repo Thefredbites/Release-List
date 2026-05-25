@@ -161,7 +161,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
             {/* Separator + tagline */}
             <div style={{ width: 40, height: 1, background: "rgba(217,217,215,0.15)", marginBottom: 12 }} />
             <p style={{ fontSize: 13, lineHeight: 1.6, color: "rgba(217,217,215,0.42)", margin: "0 0 24px" }}>
-              Para el antojo entre comidas, rápido, portable.
+              Para el antojo entre comidas, rápido y portable.
             </p>
 
             {/* Imágenes */}
@@ -179,7 +179,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
             {/* Stats */}
             <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
               {[
-                { value: "+30g", detail: "proteína / 100g" },
+                { value: "+31g", detail: "proteína / 100g" },
                 { value: "0g", detail: "azúcares añadidos" },
                 { value: "270", detail: "calorías / 100g" },
                 { value: "✦", detail: "colágeno & magnesio" },
@@ -319,7 +319,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                     maxWidth: 320,
                   }}
                 >
-                  Para el antojo entre comidas, rápido, portable.
+                  Para el antojo entre comidas, rápido y portable.
                 </p>
 
                 {/* Product preview */}
@@ -354,7 +354,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                   {/* Product info */}
                   <div className="flex flex-col gap-3 pt-1 shrink-0">
                     {[
-                      { value: "+30g", detail: "proteína / 100g" },
+                      { value: "+31g", detail: "proteína / 100g" },
                       { value: "0g", detail: "azúcares añadidos" },
                       { value: "260", detail: "calorías / 100g" },
                       { value: "✦", detail: "colágeno & magnesio" },
@@ -531,7 +531,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                       maxWidth: 340,
                     }}
                   >
-                    Sé de los primeros: promociones, descuentos y regalos exclusivos para early supporters, además de avisos de lanzamiento y eventos privados.
+                    Sé de los primeros que reciban el producto.
                   </p>
 
                   {/* Form */}
@@ -678,44 +678,117 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                     </button>
                   </Form>
 
-                  {/* Trust row */}
+                  {/* Trust cards */}
                   <div
                     style={{
-                      display: "flex",
-                      gap: 18,
-                      flexWrap: "wrap",
-                      marginTop: 20,
-                      paddingTop: 18,
+                      display: "grid",
+                      gridTemplateColumns: "repeat(2, 1fr)",
+                      gap: 10,
+                      marginTop: 22,
+                      paddingTop: 20,
                       borderTop: "1px solid rgba(10,10,10,0.1)",
                     }}
                   >
-                    {["Promos & descuentos", "Eventos exclusivos", "Cupo limitado"].map(
-                      (item) => (
+                    {[
+                      {
+                        title: "Promos & descuentos",
+                        detail: "Precio founders en el primer drop",
+                        icon: (
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <path d="M20.59 13.41 13.42 20.58a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z" />
+                            <line x1="7" y1="7" x2="7.01" y2="7" />
+                          </svg>
+                        ),
+                      },
+                      {
+                        title: "Regalos exclusivos",
+                        detail: "Para early supporters de la lista",
+                        icon: (
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <polyline points="20 12 20 22 4 22 4 12" />
+                            <rect x="2" y="7" width="20" height="5" />
+                            <line x1="12" y1="22" x2="12" y2="7" />
+                            <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" />
+                            <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" />
+                          </svg>
+                        ),
+                      },
+                      {
+                        title: "Eventos exclusivos",
+                        detail: "Lanzamientos y meet-ups privados",
+                        icon: (
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+                            <line x1="16" y1="2" x2="16" y2="6" />
+                            <line x1="8" y1="2" x2="8" y2="6" />
+                            <line x1="3" y1="10" x2="21" y2="10" />
+                            <circle cx="12" cy="16" r="1.5" fill="currentColor" />
+                          </svg>
+                        ),
+                      },
+                      {
+                        title: "Cupo limitado",
+                        detail: "Batches pequeños, hechos a mano",
+                        icon: (
+                          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                            <circle cx="12" cy="12" r="10" />
+                            <polyline points="12 6 12 12 16 14" />
+                          </svg>
+                        ),
+                      },
+                    ].map(({ title, detail, icon }) => (
+                      <div
+                        key={title}
+                        style={{
+                          display: "flex",
+                          alignItems: "flex-start",
+                          gap: 11,
+                          background: "rgba(255,255,255,0.55)",
+                          border: "1px solid rgba(10,10,10,0.08)",
+                          borderRadius: 10,
+                          padding: "12px 13px",
+                          backdropFilter: "blur(4px)",
+                        }}
+                      >
                         <span
-                          key={item}
                           style={{
+                            flexShrink: 0,
+                            width: 32,
+                            height: 32,
+                            borderRadius: 8,
+                            background: "#0a0a0a",
+                            color: "#f1f0ee",
                             display: "inline-flex",
                             alignItems: "center",
-                            gap: 6,
-                            fontSize: 10,
-                            letterSpacing: "0.14em",
-                            textTransform: "uppercase",
-                            color: "#3a3a3a",
+                            justifyContent: "center",
                           }}
                         >
+                          {icon}
+                        </span>
+                        <div style={{ display: "flex", flexDirection: "column", gap: 2, minWidth: 0 }}>
                           <span
                             style={{
-                              width: 4,
-                              height: 4,
-                              borderRadius: "50%",
-                              background: "#0a0a0a",
-                              display: "inline-block",
+                              fontSize: 12,
+                              fontWeight: 600,
+                              letterSpacing: "-0.01em",
+                              color: "#0a0a0a",
+                              lineHeight: 1.2,
                             }}
-                          />
-                          {item}
-                        </span>
-                      )
-                    )}
+                          >
+                            {title}
+                          </span>
+                          <span
+                            style={{
+                              fontSize: 10.5,
+                              lineHeight: 1.35,
+                              color: "rgba(10,10,10,0.55)",
+                            }}
+                          >
+                            {detail}
+                          </span>
+                        </div>
+                      </div>
+                    ))}
                   </div>
 
                 </div>
@@ -971,12 +1044,12 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
         >
           {/* A */}
           <div className="bc-a" style={{ gridColumn: "1 / 3", gridRow: "1 / 3", background: "radial-gradient(ellipse at 110% -10%, rgba(105,210,227,0.45) 0%, transparent 55%), radial-gradient(ellipse at -10% 110%, rgba(238,74,129,0.35) 0%, transparent 55%), #f1f0ee", borderRadius: 10, padding: "28px 32px", display: "flex", flexDirection: "column", justifyContent: "flex-end" }}>
-            <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)", marginBottom: 14 }}>The Fred Bites — Batch n°01</span>
+            <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)", marginBottom: 14 }}>The Fred Bites</span>
             <h2 style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(34px, 3.6vw, 58px)", lineHeight: 0.9, letterSpacing: "-0.025em", color: "#0a0a0a", margin: "0 0 14px" }}>
               Snack<br />diferente.
             </h2>
             <p style={{ fontSize: 12, lineHeight: 1.65, color: "rgba(10,10,10,0.55)", maxWidth: 300, margin: 0 }}>
-              Nació para demostrar que comer bien puede ser delicioso. Un dulce proteico, hecho a mano, con ingredientes que tu cuerpo reconoce.
+              Para comer bien y rico. Un snack proteico, natural y accesible, con beneficios para tu cuerpo.
             </p>
           </div>
 
@@ -984,7 +1057,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
           <div className="bc-b" style={{ gridColumn: "3", gridRow: "1", background: "radial-gradient(ellipse at 50% 120%, rgba(1,71,186,0.5) 0%, transparent 65%), #f1f0ee", borderRadius: 10, padding: "22px 24px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
             <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)" }}>Proteína / 100g</span>
             <div>
-              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(36px, 3.2vw, 52px)", lineHeight: 1, letterSpacing: "-0.03em", color: "#0a0a0a", display: "block" }}>+30g</span>
+              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(36px, 3.2vw, 52px)", lineHeight: 1, letterSpacing: "-0.03em", color: "#0a0a0a", display: "block" }}>+31g</span>
               <span style={{ fontSize: 10, color: "rgba(10,10,10,0.4)", letterSpacing: "0.1em" }}>Alto en proteína real</span>
             </div>
           </div>
@@ -1004,8 +1077,8 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
               <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)", display: "block", marginBottom: 8 }}>Calorías / 100g</span>
               <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: "clamp(28px, 2.8vw, 44px)", lineHeight: 1, letterSpacing: "-0.03em", color: "#0a0a0a" }}>270 kcal</span>
             </div>
-            <p style={{ fontSize: 11, lineHeight: 1.6, color: "rgba(10,10,10,0.5)", maxWidth: 160, margin: 0 }}>
-              Energía real sin comprometer tu día ni tu salud.
+            <p style={{ fontSize: 12, lineHeight: 1.6, color: "rgba(10,10,10,0.5)", maxWidth: 160, margin: 0 }}>
+              Energía y rendimiento.
             </p>
           </div>
 
@@ -1023,8 +1096,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
           <div className="bc-f" style={{ gridColumn: "3", gridRow: "3", background: "radial-gradient(ellipse at 50% -20%, rgba(137,171,228,0.55) 0%, transparent 65%), #f1f0ee", borderRadius: 10, padding: "18px 20px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
             <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)" }}>Proceso</span>
             <div>
-              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 17, color: "#0a0a0a", letterSpacing: "-0.01em", display: "block" }}>Handmade</span>
-              <span style={{ fontSize: 10, color: "rgba(10,10,10,0.4)", letterSpacing: "0.06em" }}>Lotes pequeños · Est. 2025</span>
+              <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 17, color: "#0a0a0a", letterSpacing: "-0.01em", display: "block" }}>Crujiente por fuera y suave por dentro</span>
             </div>
           </div>
 
@@ -1033,7 +1105,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
             <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(10,10,10,0.4)" }}>Misión</span>
             <div>
               <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 17, color: "#0a0a0a", letterSpacing: "-0.01em", display: "block" }}>Bite well.</span>
-              <span style={{ fontSize: 10, color: "rgba(10,10,10,0.4)", letterSpacing: "0.06em" }}>Sin sacrificar el sabor</span>
+              <span style={{ fontSize: 10, color: "rgba(10,10,10,0.4)", letterSpacing: "0.06em" }}>Para una mejor nutrición sin sacrificar sabor</span>
             </div>
           </div>
 
