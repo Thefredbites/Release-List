@@ -3,7 +3,7 @@ import { Form } from "react-router";
 import type { WaitlistSubmissionResult } from "../../lib/waitlist.server";
 
 const MARQUEE_ITEMS = [
-  "Sample n°01",
+  "Precio accesible",
   "Coming soon",
   "Alta proteína",
   "Para los que saben",
