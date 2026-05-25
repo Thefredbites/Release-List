@@ -167,7 +167,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
 
             {/* Imágenes */}
             <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
-              {["/empaque1.png", "/empaque2.png"].map((src, i) => (
+              {["/empaque1.webp", "/empaque2.webp"].map((src, i) => (
                 <img
                   key={i}
                   src={src}
@@ -327,7 +327,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                 <div className="mt-5 flex gap-3 items-start">
                   {/* Images */}
                   <div className="flex gap-2 shrink-0">
-                    {["/empaque1.png", "/empaque2.png"].map((src, i) => (
+                    {["/empaque1.webp", "/empaque2.webp"].map((src, i) => (
                       <img
                         key={i}
                         src={src}
@@ -402,7 +402,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
               className="right-panel"
               style={{
                 flex: 1,
-                backgroundImage: "url('/silver.jpg')",
+                backgroundImage: "url('/silver.webp')",
                 backgroundSize: "cover",
                 backgroundPosition: "center",
                 display: "flex",
@@ -892,7 +892,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
           flexShrink: 0,
           borderRadius: 14,
           overflow: "hidden",
-          backgroundImage: "url('/silver.jpg')",
+          backgroundImage: "url('/silver.webp')",
           backgroundSize: "cover",
           backgroundPosition: "center",
           fontFamily: "'DM Sans', 'Helvetica Neue', Arial, sans-serif",
