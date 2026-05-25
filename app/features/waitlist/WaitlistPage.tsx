@@ -3,12 +3,11 @@ import { Form } from "react-router";
 import type { WaitlistSubmissionResult } from "../../lib/waitlist.server";
 
 const MARQUEE_ITEMS = [
-  "Batch n°01",
+  "Sample n°01",
   "Coming soon",
-  "Small run",
-  "Handmade",
-  "For those who know",
-  "Release list open",
+  "Alta proteína",
+  "Para los que saben",
+  "Lista de lanzamiento abierto",
 ];
 
 type WaitlistPageProps = {
@@ -162,7 +161,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
             {/* Separator + tagline */}
             <div style={{ width: 40, height: 1, background: "rgba(217,217,215,0.15)", marginBottom: 12 }} />
             <p style={{ fontSize: 13, lineHeight: 1.6, color: "rgba(217,217,215,0.42)", margin: "0 0 24px" }}>
-              Small batches. Handmade. For those who know their food.
+              Para el antojo entre comidas, rápido, portable.
             </p>
 
             {/* Imágenes */}
@@ -296,9 +295,9 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                     margin: 0,
                   }}
                 >
-                  Snack
+                  Bite
                   <br />
-                  The Magic.
+                  First.
                 </h1>
 
                 {/* Thin rule */}
@@ -320,20 +319,35 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                     maxWidth: 320,
                   }}
                 >
-                  Small batches. Handmade. For those who know their food.
+                  Para el antojo entre comidas, rápido, portable.
                 </p>
 
                 {/* Product preview */}
                 <div className="mt-5 flex gap-3 items-start">
                   {/* Images */}
                   <div className="flex gap-2 shrink-0">
-                    {["/empaque1.webp", "/empaque2.webp"].map((src, i) => (
-                      <img
-                        key={i}
-                        src={src}
-                        alt={`The Fred Bites — presentation 0${i + 1}`}
-                        className="w-50 h-auto block"
-                      />
+                    {[
+                      { src: "/empaque1.webp", label: "Fresa" },
+                      { src: "/empaque2.webp", label: "Chocolate" },
+                    ].map(({ src, label }) => (
+                      <div key={src} className="flex flex-col items-center gap-2 shrink-0">
+                        <img
+                          src={src}
+                          alt={`The Fred Bites — ${label}`}
+                          className="w-50 h-auto block"
+                        />
+                        <span
+                          style={{
+                            fontFamily: "'Bowlby One', 'Arial Black', sans-serif",
+                            fontSize: 14,
+                            letterSpacing: "0.02em",
+                            color: "#d9d9d7",
+                            lineHeight: 1,
+                          }}
+                        >
+                          {label}
+                        </span>
+                      </div>
                     ))}
                   </div>
 
@@ -354,6 +368,50 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                         </span>
                       </div>
                     ))}
+
+                    {/* Mood descriptors */}
+                    <div
+                      style={{
+                        marginTop: 14,
+                        paddingTop: 12,
+                        borderTop: "1px solid rgba(217,217,215,0.12)",
+                        display: "flex",
+                        flexDirection: "column",
+                        gap: 4,
+                      }}
+                    >
+                      <span
+                        style={{
+                          fontFamily: "'Bowlby One', 'Arial Black', sans-serif",
+                          fontSize: 15,
+                          letterSpacing: "-0.01em",
+                          color: "#d9d9d7",
+                          lineHeight: 1.1,
+                        }}
+                      >
+                        Natural
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 12,
+                          lineHeight: 1.4,
+                          color: "rgba(217,217,215,0.7)",
+                          fontStyle: "italic",
+                        }}
+                      >
+                        Delicioso
+                      </span>
+                      <span
+                        style={{
+                          fontSize: 12,
+                          lineHeight: 1.4,
+                          color: "rgba(217,217,215,0.5)",
+                          fontStyle: "italic",
+                        }}
+                      >
+                        Crujiente y suave
+                      </span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -371,8 +429,8 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                   src="/logotipo.png"
                   alt="The Fred Bites"
                   style={{
-                    height: 26,
-                    opacity: 0.2,
+                    height: 48,
+                    opacity: 0.80,
                     filter: "invert(1) brightness(1.8)",
                   }}
                 />
@@ -380,7 +438,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                   style={{
                     width: 1,
                     height: 18,
-                    background: "rgba(217,217,215,0.18)",
+                    background: "rgba(217,217,215,0.80)",
                     display: "inline-block",
                   }}
                 />
@@ -389,7 +447,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                     fontSize: 9,
                     letterSpacing: "0.22em",
                     textTransform: "uppercase",
-                    color: "rgba(217,217,215,0.22)",
+                    color: "rgba(217,217,215,0.80)",
                   }}
                 >
                   Est. 2025
@@ -431,7 +489,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                     flex: 1,
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     paddingTop: 40,
                     paddingBottom: 32,
                     position: "relative",
@@ -461,7 +519,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                       margin: "0 0 10px",
                     }}
                   >
-                    Entra al drop.
+                    Únete a la comunidad.
                   </h2>
 
                   <p
@@ -573,8 +631,10 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                         type="tel"
                         name="whatsapp"
                         defaultValue={values?.whatsapp ?? ""}
-                        placeholder="+1 555 000 0000"
+                        placeholder="5512345678"
                         autoComplete="tel"
+                        inputMode="numeric"
+                        maxLength={10}
                         className={`wl-input wl-input--transparent${fieldErrors?.whatsapp ? " wl-input--error" : ""}`}
                       />
                       {fieldErrors?.whatsapp ? (
@@ -658,15 +718,6 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                     )}
                   </div>
 
-                  {/* Bottom logotipo */}
-                  <div style={{ marginTop: "auto", paddingTop: 28 }}>
-                    <img
-                      src="/logotipo.png"
-                      alt=""
-                      aria-hidden="true"
-                      style={{ height: 20, opacity: 0.15 }}
-                    />
-                  </div>
                 </div>
               ) : (
                 <div
@@ -676,7 +727,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                     flex: 1,
                     display: "flex",
                     flexDirection: "column",
-                    justifyContent: "center",
+                    justifyContent: "flex-start",
                     paddingTop: 40,
                     paddingBottom: 32,
                     position: "relative",
@@ -735,14 +786,6 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                     ✦ Lugar reservado · n°{submission?.ok ? submission.reserveCode : "000"}
                   </div>
 
-                  <div style={{ marginTop: "auto", paddingTop: 28 }}>
-                    <img
-                      src="/logotipo.png"
-                      alt=""
-                      aria-hidden="true"
-                      style={{ height: 20, opacity: 0.15 }}
-                    />
-                  </div>
                 </div>
               )}
             </div>

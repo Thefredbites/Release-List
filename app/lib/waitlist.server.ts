@@ -30,8 +30,8 @@ export type SanitizedWaitlistInput = {
 };
 
 const EMAIL_MAX_LENGTH = 320;
-const E164_REGEX = /^\+[1-9]\d{7,14}$/;
 const RESERVE_POSITION_OFFSET = 79;
+const MEXICO_PHONE_DIGITS = 10;
 
 function cleanEmail(value: FormDataEntryValue | null) {
   return typeof value === "string" ? value.trim() : "";
@@ -64,7 +64,7 @@ export function validateWaitlistInput(formData: FormData): {
   if (rawWhatsapp) {
     whatsapp = normalizeWhatsapp(rawWhatsapp);
     if (!whatsapp) {
-      fieldErrors.whatsapp = "Usa formato internacional, por ejemplo +5215512345678.";
+      fieldErrors.whatsapp = "Ingresa un numero de Mexico de 10 digitos.";
     }
   }
 
@@ -83,14 +83,21 @@ export function validateWaitlistInput(formData: FormData): {
 }
 
 export function normalizeWhatsapp(value: string) {
-  const compact = value.replace(/[\s().-]/g, "");
-  const normalized = compact.startsWith("00") ? `+${compact.slice(2)}` : compact;
+  const digitsOnly = value.replace(/\D/g, "");
 
-  if (!E164_REGEX.test(normalized)) {
-    return null;
+  if (digitsOnly.length === MEXICO_PHONE_DIGITS) {
+    return `+52${digitsOnly}`;
   }
 
-  return normalized;
+  if (digitsOnly.length === 12 && digitsOnly.startsWith("52")) {
+    return `+${digitsOnly}`;
+  }
+
+  if (digitsOnly.length === 13 && digitsOnly.startsWith("521")) {
+    return `+52${digitsOnly.slice(3)}`;
+  }
+
+  return null;
 }
 
 export function getClientIp(request: Request) {
