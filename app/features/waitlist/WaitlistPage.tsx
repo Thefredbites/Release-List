@@ -1,4 +1,6 @@
-import { useState } from "react";
+import { Form } from "react-router";
+
+import type { WaitlistSubmissionResult } from "../../lib/waitlist.server";
 
 const MARQUEE_ITEMS = [
   "Batch n°01",
@@ -9,26 +11,15 @@ const MARQUEE_ITEMS = [
   "Release list open",
 ];
 
-type FormState = "idle" | "done";
+type WaitlistPageProps = {
+  submission?: WaitlistSubmissionResult;
+  isSubmitting: boolean;
+};
 
-export function WaitlistPage() {
-  const [formState, setFormState] = useState<FormState>("idle");
-  const [email, setEmail] = useState("");
-  const [whatsapp, setWhatsapp] = useState("");
-  const [ticket, setTicket] = useState("042");
-  const [emailError, setEmailError] = useState(false);
-
-  function handleSubmit(e: React.FormEvent) {
-    e.preventDefault();
-    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
-      setEmailError(true);
-      setTimeout(() => setEmailError(false), 1000);
-      return;
-    }
-    const n = String(Math.floor(20 + Math.random() * 180)).padStart(3, "0");
-    setTicket(n);
-    setFormState("done");
-  }
+export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
+  const formState = submission?.ok ? "done" : "idle";
+  const fieldErrors = !submission?.ok ? submission?.fieldErrors : undefined;
+  const values = !submission?.ok ? submission?.values : undefined;
 
   return (
     <>
@@ -486,11 +477,29 @@ export function WaitlistPage() {
                   </p>
 
                   {/* Form */}
-                  <form
-                    onSubmit={handleSubmit}
+                  <Form
+                    method="post"
                     noValidate
                     style={{ display: "flex", flexDirection: "column", gap: 10 }}
                   >
+                    <input
+                      type="text"
+                      name="company"
+                      tabIndex={-1}
+                      autoComplete="off"
+                      aria-hidden="true"
+                      style={{
+                        position: "absolute",
+                        width: 1,
+                        height: 1,
+                        padding: 0,
+                        margin: -1,
+                        overflow: "hidden",
+                        clip: "rect(0, 0, 0, 0)",
+                        whiteSpace: "nowrap",
+                        border: 0,
+                      }}
+                    />
                     {/* Email */}
                     <div>
                       <label
@@ -509,13 +518,25 @@ export function WaitlistPage() {
                       <input
                         id="wl-email"
                         type="email"
-                        value={email}
-                        onChange={(e) => setEmail(e.target.value)}
+                        name="email"
+                        defaultValue={values?.email ?? ""}
                         placeholder="your@email.com"
                         autoComplete="email"
                         required
-                        className={`wl-input${emailError ? " wl-input--error" : ""}`}
+                        className={`wl-input${fieldErrors?.email ? " wl-input--error" : ""}`}
                       />
+                      {fieldErrors?.email ? (
+                        <p
+                          style={{
+                            marginTop: 8,
+                            fontSize: 12,
+                            lineHeight: 1.4,
+                            color: "#8d3116",
+                          }}
+                        >
+                          {fieldErrors.email}
+                        </p>
+                      ) : null}
                     </div>
 
                     {/* WhatsApp */}
@@ -550,23 +571,52 @@ export function WaitlistPage() {
                       <input
                         id="wl-whatsapp"
                         type="tel"
-                        value={whatsapp}
-                        onChange={(e) => setWhatsapp(e.target.value)}
+                        name="whatsapp"
+                        defaultValue={values?.whatsapp ?? ""}
                         placeholder="+1 555 000 0000"
                         autoComplete="tel"
-                        className="wl-input wl-input--transparent"
+                        className={`wl-input wl-input--transparent${fieldErrors?.whatsapp ? " wl-input--error" : ""}`}
                       />
+                      {fieldErrors?.whatsapp ? (
+                        <p
+                          style={{
+                            marginTop: 8,
+                            fontSize: 12,
+                            lineHeight: 1.4,
+                            color: "#8d3116",
+                          }}
+                        >
+                          {fieldErrors.whatsapp}
+                        </p>
+                      ) : null}
                     </div>
+
+                    {fieldErrors?.form ? (
+                      <div
+                        style={{
+                          borderRadius: 12,
+                          border: "1px solid rgba(141, 49, 22, 0.18)",
+                          background: "rgba(141, 49, 22, 0.08)",
+                          padding: "10px 12px",
+                          fontSize: 12,
+                          lineHeight: 1.5,
+                          color: "#7b250a",
+                        }}
+                      >
+                        {fieldErrors.form}
+                      </div>
+                    ) : null}
 
                     <button
                       type="submit"
+                      disabled={isSubmitting}
                       className="wl-submit"
                       style={{ marginTop: 6 }}
                     >
-                      <span>Apúntame</span>
+                      <span>{isSubmitting ? "Guardando..." : "Apúntame"}</span>
                       <span style={{ fontSize: 16, lineHeight: 1 }}>→</span>
                     </button>
-                  </form>
+                  </Form>
 
                   {/* Trust row */}
                   <div
@@ -657,7 +707,9 @@ export function WaitlistPage() {
                       maxWidth: 340,
                     }}
                   >
-                    We'll notify you when batch n°01 is ready. Share it with someone who'd appreciate it.
+                    {submission?.ok
+                      ? submission.message
+                      : "Te avisaremos cuando batch n°01 salga."}
                   </p>
 
                   <span
@@ -673,7 +725,7 @@ export function WaitlistPage() {
                       width: "fit-content",
                     }}
                   >
-                    Lugar reservado · n°{ticket}
+                    Lugar reservado · n°{submission?.ok ? submission.reserveCode : "000"}
                   </span>
 
                   <div style={{ marginTop: "auto", paddingTop: 28 }}>

@@ -181,6 +181,12 @@ button {
   transform: translateY(-1px);
 }
 
+.wl-submit:disabled {
+  cursor: wait;
+  opacity: 0.72;
+  transform: none;
+}
+
 .wl-submit:active {
   transform: translateY(0);
 }
