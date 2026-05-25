@@ -13,9 +13,9 @@ import {
 } from "../lib/waitlist.server";
 
 export function meta({}: Route.MetaArgs) {
-  const title = "The Fred Bites - Anotate al waitlist";
+  const title = "The Fred Bites - Únete a la comunidad";
   const description =
-    "The Fred Bites llega pronto. Anotate al waitlist para entrar primero al batch 01, recibir acceso anticipado y enterarte en cuanto salga.";
+    "The Fred Bites llega pronto. Anotate al waitlist para recibir regalos, descuentos exclusivos y acceso a eventos privados.";
 
   return [
     { title },
