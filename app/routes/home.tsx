@@ -1,6 +1,7 @@
 import { useActionData, useNavigation } from "react-router";
 
 import type { Route } from "./+types/home";
+import { WaitlistPage } from "../features/waitlist/WaitlistPage";
 import { createSupabaseAdminClient } from "../lib/supabase.server";
 import {
   formatReserveCodeFromPosition,
@@ -10,16 +11,24 @@ import {
   type WaitlistSubmissionResult,
   validateWaitlistInput,
 } from "../lib/waitlist.server";
-import { WaitlistPage } from "../features/waitlist/WaitlistPage";
 
 export function meta({}: Route.MetaArgs) {
+  const title = "The Fred Bites - Anotate al waitlist";
+  const description =
+    "The Fred Bites llega pronto. Anotate al waitlist para entrar primero al batch 01, recibir acceso anticipado y enterarte en cuanto salga.";
+
   return [
-    { title: "The Fred Bites — Anotate en la lista" },
-    {
-      name: "description",
-      content:
-        "La tanda n°01 de The Fred Bites sale pronto. Acceso anticipado, precio de fundadores y un aviso cuando esté lista.",
-    },
+    { title },
+    { name: "description", content: description },
+    { property: "og:type", content: "website" },
+    { property: "og:title", content: title },
+    { property: "og:description", content: description },
+    { property: "og:image", content: "/og.jpg" },
+    { property: "og:image:alt", content: "The Fred Bites Snack Balls packaging" },
+    { name: "twitter:card", content: "summary_large_image" },
+    { name: "twitter:title", content: title },
+    { name: "twitter:description", content: description },
+    { name: "twitter:image", content: "/og.jpg" },
   ];
 }
 
@@ -133,7 +142,7 @@ export async function action({ request }: Route.ActionArgs) {
 
   return {
     ok: true,
-    message: "Ya quedaste en la lista. Te avisaremos cuando salga la batch n°01.",
+    message: "Ya quedaste en la lista. Te avisaremos cuando salga la batch 01.",
     reserveCode: formatReserveCodeFromPosition(waitlistPosition),
   } satisfies WaitlistSubmissionResult;
 }
