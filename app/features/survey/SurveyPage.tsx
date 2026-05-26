@@ -525,14 +525,10 @@ export function SurveyPage({ submission, isSubmitting }: SurveyPageProps) {
                 ) : null}
 
                 <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                  <p className="text-sm text-[#3a3a3a]">
-                    La encuesta ahora guarda respuestas reales en la tabla de
-                    survey.
-                  </p>
                   <button
                     type="submit"
                     disabled={isSubmitting}
-                    className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#0a0a0a] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#f4efe8] transition hover:bg-[#242424] disabled:cursor-wait disabled:opacity-70"
+                    className="inline-flex min-h-12 items-center justify-center rounded-full bg-[#0a0a0a] px-6 py-3 text-sm font-semibold uppercase tracking-[0.2em] text-[#f4efe8] transition hover:bg-[#242424] cursor-pointer disabled:opacity-70"
                   >
                     {isSubmitting ? "Enviando..." : "Enviar feedback"}
                   </button>
