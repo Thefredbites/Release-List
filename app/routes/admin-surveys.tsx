@@ -1,6 +1,8 @@
+import { useState } from "react";
 import { data } from "react-router";
 
 import type { Route } from "./+types/admin-surveys";
+import { downloadFile } from "../lib/download";
 import { requireAdminUser } from "../lib/admin.server";
 import type { SurveyMatrix } from "../lib/survey";
 import { createSupabaseServerClient } from "../lib/supabase.server";
@@ -64,6 +66,22 @@ function renderMatrix(matrix: SurveyMatrix | null) {
 }
 
 export default function AdminSurveys({ loaderData }: Route.ComponentProps) {
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
+
+  async function handleDownloadSurveys() {
+    setIsDownloading(true);
+    setDownloadError(null);
+
+    try {
+      await downloadFile("/admin/surveys.csv", "the-fred-bites-surveys.csv");
+    } catch {
+      setDownloadError("No se pudo descargar el CSV.");
+    } finally {
+      setIsDownloading(false);
+    }
+  }
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#f4efe8] text-[#0a0a0a]">
       <div
@@ -120,12 +138,14 @@ export default function AdminSurveys({ loaderData }: Route.ComponentProps) {
               </div>
 
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
-                <a
-                  href="/admin/surveys.csv"
+                <button
+                  type="button"
+                  onClick={() => void handleDownloadSurveys()}
+                  disabled={isDownloading}
                   className="inline-flex min-h-12 items-center justify-center rounded-full border border-cyan-300/32 bg-cyan-300/12 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-cyan-100 transition hover:bg-cyan-300/20"
                 >
-                  Descargar CSV
-                </a>
+                  {isDownloading ? "Descargando..." : "Descargar CSV"}
+                </button>
                 <a
                   href="/admin"
                   className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/14 bg-white/6 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#d9d9d7] transition hover:bg-white/10"
@@ -134,6 +154,12 @@ export default function AdminSurveys({ loaderData }: Route.ComponentProps) {
                 </a>
               </div>
             </div>
+
+            {downloadError ? (
+              <p className="relative mt-4 text-sm text-rose-200">
+                {downloadError}
+              </p>
+            ) : null}
           </div>
 
           <section className="relative bg-[linear-gradient(180deg,rgba(236,232,226,0.98)_0%,rgba(224,218,210,0.95)_100%)] text-[#0a0a0a]">

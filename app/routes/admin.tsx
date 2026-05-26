@@ -1,7 +1,9 @@
+import { useState } from "react";
 import { data, Form } from "react-router";
 
 import type { Route } from "./+types/admin";
 import { requireAdminUser } from "../lib/admin.server";
+import { downloadFile } from "../lib/download";
 import { createSupabaseServerClient } from "../lib/supabase.server";
 
 type LeadRow = {
@@ -46,6 +48,22 @@ function formatDate(value: string) {
 }
 
 export default function Admin({ loaderData }: Route.ComponentProps) {
+  const [isDownloading, setIsDownloading] = useState(false);
+  const [downloadError, setDownloadError] = useState<string | null>(null);
+
+  async function handleDownloadLeads() {
+    setIsDownloading(true);
+    setDownloadError(null);
+
+    try {
+      await downloadFile("/admin/leads.csv", "the-fred-bites-leads.csv");
+    } catch {
+      setDownloadError("No se pudo descargar el CSV.");
+    } finally {
+      setIsDownloading(false);
+    }
+  }
+
   return (
     <main className="relative min-h-screen overflow-hidden bg-[#f4efe8] text-[#0a0a0a]">
       <div
@@ -113,12 +131,14 @@ export default function Admin({ loaderData }: Route.ComponentProps) {
                 >
                   Ver Surveys
                 </a>
-                <a
-                  href="/admin/leads.csv"
+                <button
+                  type="button"
+                  onClick={() => void handleDownloadLeads()}
+                  disabled={isDownloading}
                   className="inline-flex min-h-12 items-center justify-center rounded-full border border-cyan-300/32 bg-cyan-300/12 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-cyan-100 transition hover:bg-cyan-300/20"
                 >
-                  Descargar CSV
-                </a>
+                  {isDownloading ? "Descargando..." : "Descargar CSV"}
+                </button>
                 <Form action="/admin/logout" method="post">
                   <button
                     type="submit"
@@ -129,6 +149,12 @@ export default function Admin({ loaderData }: Route.ComponentProps) {
                 </Form>
               </div>
             </div>
+
+            {downloadError ? (
+              <p className="relative mt-4 text-sm text-rose-200">
+                {downloadError}
+              </p>
+            ) : null}
           </div>
 
           <section className="relative bg-[linear-gradient(180deg,rgba(236,232,226,0.98)_0%,rgba(224,218,210,0.95)_100%)] text-[#0a0a0a]">

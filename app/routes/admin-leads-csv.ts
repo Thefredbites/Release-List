@@ -33,7 +33,3 @@ export async function loader({ request }: Route.LoaderArgs) {
 
   return new Response(rows.join("\n"), { headers });
 }
-
-export default function AdminLeadsCsv() {
-  return null;
-}
