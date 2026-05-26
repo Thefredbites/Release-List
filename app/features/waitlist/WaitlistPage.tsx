@@ -1,3 +1,4 @@
+import { useState } from "react";
 import { Form } from "react-router";
 
 import type { WaitlistSubmissionResult } from "../../lib/waitlist.server";
@@ -19,6 +20,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
   const formState = submission?.ok ? "done" : "idle";
   const fieldErrors = !submission?.ok ? submission?.fieldErrors : undefined;
   const values = !submission?.ok ? submission?.values : undefined;
+  const [scrolled, setScrolled] = useState(false);
 
   return (
     <>
@@ -84,8 +86,24 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
       </a>
     </div>
 
+    {/* ── Floating scroll hint (mobile only) ── */}
+    <div
+      className={`scroll-hint${scrolled ? " scroll-hint--hidden" : ""}`}
+      aria-hidden="true"
+    >
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+        <polyline points="6 9 12 15 18 9" />
+      </svg>
+    </div>
+
     {/* ── Scrollable layer ── */}
-    <div style={{ position: "fixed", inset: 0, overflowY: "auto", zIndex: 10 }}>
+    <div
+      style={{ position: "fixed", inset: 0, overflowY: "auto", zIndex: 10 }}
+      onScroll={(e) => {
+        const top = (e.target as HTMLDivElement).scrollTop;
+        setScrolled(top > 24);
+      }}
+    >
       <div className="scroll-inner" style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 12, padding: "16px 20px 20px", minHeight: "100%" }}>
 
       {/* ── Card 1: Waitlist (dark) ── */}
@@ -105,6 +123,24 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
       >
       {/* Animated grain texture */}
       <div className="grain-layer" aria-hidden="true" />
+
+      {/* Logo mobile — top-right (card-1) */}
+      <img
+        className="card1-logo-mobile"
+        src="/logotipo.png"
+        alt="The Fred Bites"
+        style={{
+          position: "absolute",
+          top: 14,
+          right: 14,
+          height: 32,
+          opacity: 0.9,
+          zIndex: 20,
+          display: "none",
+          pointerEvents: "none",
+          userSelect: "none",
+        }}
+      />
 
       {/* Edge vignette */}
       <div
@@ -164,15 +200,22 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
               Para el antojo entre comidas, rápido y portable.
             </p>
 
-            {/* Imágenes */}
-            <div style={{ display: "flex", gap: 8, marginBottom: 20 }}>
-              {["/empaque1.webp", "/empaque2.webp"].map((src, i) => (
-                <img
-                  key={i}
-                  src={src}
-                  alt={`The Fred Bites — presentation 0${i + 1}`}
-                  style={{ width: 110, height: "auto", objectFit: "contain", display: "block" }}
-                />
+            {/* Imágenes con labels */}
+            <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
+              {[
+                { src: "/empaque1.webp", label: "Fresa" },
+                { src: "/empaque2.webp", label: "Chocolate" },
+              ].map(({ src, label }) => (
+                <div key={src} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
+                  <img
+                    src={src}
+                    alt={`The Fred Bites — ${label}`}
+                    style={{ width: 110, height: "auto", objectFit: "contain", display: "block" }}
+                  />
+                  <span style={{ fontFamily: "'Bowlby One', 'Arial Black', sans-serif", fontSize: 13, letterSpacing: "0.02em", color: "#d9d9d7", lineHeight: 1 }}>
+                    {label}
+                  </span>
+                </div>
               ))}
             </div>
 
@@ -193,6 +236,37 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                   </span>
                 </div>
               ))}
+            </div>
+
+            {/* Mood descriptors */}
+            <div style={{ marginTop: 18, paddingTop: 14, borderTop: "1px solid rgba(217,217,215,0.12)", display: "flex", flexDirection: "column", gap: 4 }}>
+              {["Natural", "Delicioso", "Crujiente y suave"].map((word) => (
+                <span
+                  key={word}
+                  style={{
+                    fontFamily: "'Bowlby One', 'Arial Black', sans-serif",
+                    fontSize: 15,
+                    letterSpacing: "-0.01em",
+                    color: "#d9d9d7",
+                    lineHeight: 1.1,
+                  }}
+                >
+                  {word}
+                </span>
+              ))}
+            </div>
+
+            {/* Bottom brand row */}
+            <div style={{ marginTop: 22, display: "flex", alignItems: "center", gap: 12 }}>
+              <img
+                src="/logotipo.png"
+                alt="The Fred Bites"
+                style={{ height: 38, opacity: 0.8, filter: "invert(1) brightness(1.8)" }}
+              />
+              <span style={{ width: 1, height: 16, background: "rgba(217,217,215,0.80)", display: "inline-block" }} />
+              <span style={{ fontSize: 9, letterSpacing: "0.22em", textTransform: "uppercase", color: "rgba(217,217,215,0.80)" }}>
+                Est. 2025
+              </span>
             </div>
           </div>
 
@@ -609,17 +683,40 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                           Opcional
                         </span>
                       </label>
-                      <input
-                        id="wl-whatsapp"
-                        type="tel"
-                        name="whatsapp"
-                        defaultValue={values?.whatsapp ?? ""}
-                        placeholder="5512345678"
-                        autoComplete="tel"
-                        inputMode="numeric"
-                        maxLength={10}
-                        className={`wl-input wl-input--transparent${fieldErrors?.whatsapp ? " wl-input--error" : ""}`}
-                      />
+                      <div style={{ position: "relative" }}>
+                        <span
+                          aria-hidden="true"
+                          style={{
+                            position: "absolute",
+                            left: 10,
+                            top: "50%",
+                            transform: "translateY(-50%)",
+                            fontSize: 12,
+                            letterSpacing: "0.12em",
+                            fontWeight: 700,
+                            color: "rgba(10,10,10,0.72)",
+                            background: "rgba(10,10,10,0.06)",
+                            border: "1px solid rgba(10,10,10,0.08)",
+                            borderRadius: 999,
+                            padding: "5px 8px",
+                            pointerEvents: "none",
+                          }}
+                        >
+                          +52
+                        </span>
+                        <input
+                          id="wl-whatsapp"
+                          type="tel"
+                          name="whatsapp"
+                          defaultValue={values?.whatsapp ?? ""}
+                          placeholder="5512345678"
+                          autoComplete="tel"
+                          inputMode="numeric"
+                          maxLength={10}
+                          style={{ paddingLeft: 62 }}
+                          className={`wl-input wl-input--transparent${fieldErrors?.whatsapp ? " wl-input--error" : ""}`}
+                        />
+                      </div>
                       {fieldErrors?.whatsapp ? (
                         <p
                           style={{
@@ -711,7 +808,7 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                       },
                       {
                         title: "Cupo limitado",
-                        detail: "Batches pequeños, hechos a mano",
+                        detail: "Registrate y sé parte de la comunidad",
                         icon: (
                           <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                             <circle cx="12" cy="12" r="10" />
@@ -870,10 +967,47 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
 
       {/* ── Responsive styles ── */}
       <style>{`
+        @keyframes scrollHintBounce {
+          0%, 100% { transform: translateY(0); opacity: 0.85; }
+          50%      { transform: translateY(6px); opacity: 1; }
+        }
+
+        .scroll-hint {
+          position: fixed;
+          right: 18px;
+          bottom: 22px;
+          z-index: 100;
+          display: none;
+          align-items: center;
+          justify-content: center;
+          width: 44px;
+          height: 44px;
+          border-radius: 999px;
+          background: rgba(10,10,10,0.78);
+          border: 1px solid rgba(217,217,215,0.22);
+          color: #d9d9d7;
+          backdrop-filter: blur(8px);
+          box-shadow: 0 8px 22px rgba(0,0,0,0.25);
+          animation: scrollHintBounce 1.8s ease-in-out infinite;
+          transition: opacity 0.3s ease, transform 0.3s ease;
+          pointer-events: none;
+        }
+        .scroll-hint--hidden {
+          opacity: 0 !important;
+          transform: translateY(20px) !important;
+          animation: none !important;
+        }
+
         /* ── Desktop ── */
         @media (min-width: 768px) {
           .mobile-hero { display: none !important; }
           .left-panel  { display: flex !important; }
+          .scroll-hint { display: none !important; }
+        }
+
+        @media (max-width: 767px) {
+          .scroll-hint { display: inline-flex !important; }
+          .card1-logo-mobile { display: block !important; }
         }
 
         /* ── Mobile ── */
@@ -909,7 +1043,10 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
 
           /* Paneles */
           .left-panel  { display: none !important; }
-          .mobile-hero { display: flex !important; flex-direction: column; }
+          .mobile-hero { display: flex !important; flex-direction: column; order: 2; }
+
+          /* Form arriba, hero abajo en mobile */
+          .md-body > div:not(.mobile-hero) { order: 1; }
 
           /* Formulario: ocupa el espacio restante, sin scroll propio */
           .right-panel {
