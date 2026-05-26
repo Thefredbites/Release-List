@@ -6,6 +6,7 @@ export default [
   route("admin/login", "routes/admin-login.tsx"),
   route("admin/logout", "routes/admin-logout.tsx"),
   route("admin/leads.csv", "routes/admin-leads-csv.ts"),
+  route("admin/surveys.csv", "routes/admin-surveys-csv.ts"),
   route("admin/surveys", "routes/admin-surveys.tsx"),
   route("admin", "routes/admin.tsx"),
   layout("routes/site-layout.tsx", [

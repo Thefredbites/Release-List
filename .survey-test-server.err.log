@@ -1,0 +1,38 @@
+=https://golzuqbwvdnfynsjqlul.supabase.co : The term '=https://golzuqbwvdnfynsjqlul.supabase.co' is not recognized as 
+the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was 
+included, verify that the path is correct and try again.
+At line:1 char:1
++ ='https://golzuqbwvdnfynsjqlul.supabase.co'; ='sb_publishable_qoHY_uh ...
++ ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (=https://golzuq...lul.supabase.co:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+=sb_publishable_qoHY_uhX6doaN7hW9adceQ_Zrl55BG8 : The term '=sb_publishable_qoHY_uhX6doaN7hW9adceQ_Zrl55BG8' is not 
+recognized as the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if 
+a path was included, verify that the path is correct and try again.
+At line:1 char:46
++ ... pabase.co'; ='sb_publishable_qoHY_uhX6doaN7hW9adceQ_Zrl55BG8'; ='eyJh ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (=sb_publishable...9adceQ_Zrl55BG8:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvbHp1cWJ3dmRuZnluc2pxbHVsIiwicm9sZSI6InNlcnZpY
+2Vfcm9sZSIsImlhdCI6MTc3OTcyNjY4NiwiZXhwIjoyMDk1MzAyNjg2fQ.55JUzhCccbp4YeczG_LhgMyRmTZO9zioubgibTpheuo : The term '=eyJh
+bGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdvbHp1cWJ3dmRuZnluc2pxbHVsIiwicm9sZSI6InNlcnZpY2Vfcm
+9sZSIsImlhdCI6MTc3OTcyNjY4NiwiZXhwIjoyMDk1MzAyNjg2fQ.55JUzhCccbp4YeczG_LhgMyRmTZO9zioubgibTpheuo' is not recognized as 
+the name of a cmdlet, function, script file, or operable program. Check the spelling of the name, or if a path was 
+included, verify that the path is correct and try again.
+At line:1 char:97
++ ... _Zrl55BG8'; ='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYm ...
++                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (=eyJhbGciOiJIUz...9zioubgibTpheuo:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 
+=4173 : The term '=4173' is not recognized as the name of a cmdlet, function, script file, or operable program. Check 
+the spelling of the name, or if a path was included, verify that the path is correct and try again.
+At line:1 char:321
++ ... yNjg2fQ.55JUzhCccbp4YeczG_LhgMyRmTZO9zioubgibTpheuo'; ='4173'; .\node ...
++                                                           ~~~~~~~
+    + CategoryInfo          : ObjectNotFound: (=4173:String) [], CommandNotFoundException
+    + FullyQualifiedErrorId : CommandNotFoundException
+ 

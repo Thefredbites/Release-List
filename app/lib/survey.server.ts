@@ -13,6 +13,12 @@ import {
   type SurveyScale,
   type SurveySubmissionResult,
 } from "./survey";
+import {
+  getClientIp,
+  hashIpAddress,
+  isSpamTrapTriggered,
+  normalizeWhatsapp,
+} from "./waitlist.server";
 
 export type {
   SanitizedSurveyInput,
@@ -22,8 +28,11 @@ export type {
   SurveySubmissionResult,
 };
 
+const LONG_TEXT_MAX_LENGTH = 2000;
+const SHORT_TEXT_MAX_LENGTH = 320;
+
 function cleanText(value: FormDataEntryValue | null) {
-  return typeof value === "string" ? value.trim() : "";
+  return typeof value === "string" ? value.trim().replace(/\s+/g, " ") : "";
 }
 
 function readMatrix(
@@ -104,6 +113,8 @@ export function validateSurveyInput(formData: FormData): {
   if (!nutritionNeeds) {
     fieldErrors.nutritionNeeds =
       "Cuéntanos qué es lo que más buscas de tu alimentación deportiva.";
+  } else if (nutritionNeeds.length > LONG_TEXT_MAX_LENGTH) {
+    fieldErrors.nutritionNeeds = "Tu respuesta es demasiado larga.";
   }
 
   const normalizedStrawberry = normalizeMatrix(strawberryRatings, STRAWBERRY_ROWS);
@@ -119,6 +130,8 @@ export function validateSurveyInput(formData: FormData): {
 
   if (!improvements) {
     fieldErrors.improvements = "Cuéntanos qué mejorarías o cambiarías.";
+  } else if (improvements.length > LONG_TEXT_MAX_LENGTH) {
+    fieldErrors.improvements = "Tu respuesta es demasiado larga.";
   }
 
   if (!BUY_OPTIONS.includes(buyIntent as BuyIntent)) {
@@ -131,11 +144,13 @@ export function validateSurveyInput(formData: FormData): {
 
   if (!nextFlavor) {
     fieldErrors.nextFlavor = "Escribe otro sabor que te gustaría probar.";
+  } else if (nextFlavor.length > SHORT_TEXT_MAX_LENGTH) {
+    fieldErrors.nextFlavor = "Ese sabor es demasiado largo.";
   }
 
   if (supporterEmail) {
     const normalizedEmail = supporterEmail.toLowerCase();
-    if (normalizedEmail.length > 320) {
+    if (normalizedEmail.length > SHORT_TEXT_MAX_LENGTH) {
       fieldErrors.supporterEmail = "Ese correo es demasiado largo.";
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(normalizedEmail)) {
       fieldErrors.supporterEmail = "Ingresa un correo valido.";
@@ -144,13 +159,8 @@ export function validateSurveyInput(formData: FormData): {
 
   let normalizedWhatsapp: string | null = null;
   if (supporterWhatsapp) {
-    const digitsOnly = supporterWhatsapp.replace(/\D/g, "");
-
-    if (digitsOnly.length === 10) {
-      normalizedWhatsapp = `+52${digitsOnly}`;
-    } else if (digitsOnly.length === 12 && digitsOnly.startsWith("52")) {
-      normalizedWhatsapp = `+${digitsOnly}`;
-    } else {
+    normalizedWhatsapp = normalizeWhatsapp(supporterWhatsapp);
+    if (!normalizedWhatsapp) {
       fieldErrors.supporterWhatsapp =
         "Ingresa un numero de Mexico de 10 digitos.";
     }
@@ -175,3 +185,5 @@ export function validateSurveyInput(formData: FormData): {
     values,
   };
 }
+
+export { getClientIp, hashIpAddress, isSpamTrapTriggered };

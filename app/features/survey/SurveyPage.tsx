@@ -251,6 +251,15 @@ export function SurveyPage({ submission, isSubmitting }: SurveyPageProps) {
                   matrices.
                 </div>
 
+                <input
+                  type="text"
+                  name="company"
+                  tabIndex={-1}
+                  autoComplete="off"
+                  aria-hidden="true"
+                  className="absolute h-px w-px overflow-hidden opacity-0 pointer-events-none"
+                />
+
                 <MatrixQuestion
                   title="Que te parece el producto que acabas de probar? (Fresa)"
                   rows={STRAWBERRY_ROWS}

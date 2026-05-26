@@ -121,6 +121,12 @@ export default function AdminSurveys({ loaderData }: Route.ComponentProps) {
 
               <div className="flex flex-col gap-3 sm:flex-row sm:flex-wrap lg:justify-end">
                 <a
+                  href="/admin/surveys.csv"
+                  className="inline-flex min-h-12 items-center justify-center rounded-full border border-cyan-300/32 bg-cyan-300/12 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-cyan-100 transition hover:bg-cyan-300/20"
+                >
+                  Descargar CSV
+                </a>
+                <a
                   href="/admin"
                   className="inline-flex min-h-12 items-center justify-center rounded-full border border-white/14 bg-white/6 px-5 py-3 text-[11px] font-semibold uppercase tracking-[0.24em] text-[#d9d9d7] transition hover:bg-white/10"
                 >
