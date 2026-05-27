@@ -694,12 +694,13 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
                             fontSize: 12,
                             letterSpacing: "0.12em",
                             fontWeight: 700,
-                            color: "rgba(10,10,10,0.72)",
-                            background: "rgba(10,10,10,0.06)",
-                            border: "1px solid rgba(10,10,10,0.08)",
-                            borderRadius: 999,
-                            padding: "5px 8px",
+                            color: "#0a0a0a",
+                            background: "#ffffff",
+                            border: "1px solid rgba(10,10,10,0.18)",
+                            borderRadius: 6,
+                            padding: "5px 9px",
                             pointerEvents: "none",
+                            zIndex: 2,
                           }}
                         >
                           +52
