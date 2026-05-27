@@ -203,8 +203,8 @@ export function WaitlistPage({ submission, isSubmitting }: WaitlistPageProps) {
             {/* Imágenes con labels */}
             <div style={{ display: "flex", gap: 10, marginBottom: 20 }}>
               {[
-                { src: "/empaque1.webp", label: "Fresa" },
-                { src: "/empaque2.webp", label: "Chocolate" },
+                { src: "/empaque1.webp", label: "Chocolate" },
+                { src: "/empaque2.webp", label: "Fresa" },
               ].map(({ src, label }) => (
                 <div key={src} style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 6 }}>
                   <img
