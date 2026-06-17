@@ -9,6 +9,7 @@ export default [
   route("admin/surveys.csv", "routes/admin-surveys-csv.ts"),
   route("admin/surveys", "routes/admin-surveys.tsx"),
   route("admin", "routes/admin.tsx"),
+  route("api/keepalive", "routes/api-keepalive.ts"),
   layout("routes/site-layout.tsx", [
     route("about", "routes/about.tsx"),
     route("menu", "routes/menu.tsx"),
