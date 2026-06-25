@@ -19,13 +19,13 @@ export async function loader({ request }: { request: Request }) {
 
   const supabase = createSupabaseAdminClient();
   const { error } = await supabase
-    .from("waitlist_leads")
-    .select("id", { count: "exact", head: true })
-    .limit(1);
+    .from("keepalive")
+    .update({ pinged_at: new Date().toISOString() })
+    .eq("id", 1);
 
   if (error) {
     return Response.json({ ok: false, error: error.message }, { status: 500 });
   }
 
-  return Response.json({ ok: true, checkedAt: new Date().toISOString() });
+  return Response.json({ ok: true, pingedAt: new Date().toISOString() });
 }
